@@ -1,93 +1,75 @@
-import { createContext, ReactNode, Component, useContext } from 'react';
+import { createContext, ReactNode, useState, useContext } from 'react';
 import { AppContext as AppContextType, ToastMessage, Warning as WarningType } from '../misc/types';
 import Loading from '../components/Loading';
-import { validateAdmin } from '../api-client';
+import { validateToken } from '../api-client';
 import { Toast } from '../components/Toast';
 import Warning from '../components/Warning';
+import { useQuery } from 'react-query';
 
 interface Props {
   children: ReactNode;
 }
 
-interface State {
-  toast?: ToastMessage;
-  warning?: WarningType;
-  isError: boolean;
-  isLoading: boolean;
-}
-
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-class AppProvider extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      toast: undefined,
-      warning: undefined,
-      isError: false,
-      isLoading: true,
-    };
-  }
+const AppProvider = ({ children }: Props): React.JSX.Element => {
+  const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+  const [warning, setWarning] = useState<WarningType | undefined>(undefined);
 
-  async componentDidMount() {
-    try {
-      await validateAdmin();
-      this.setState({ isError: false });
-    } catch {
-      this.setState({ isError: true });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
+  const { isError, isLoading } = useQuery("validateToken", validateToken, {
+    retry: false,
+    refetchOnWindowFocus: false
+  });
 
-  showToast = (toastMessage: ToastMessage) => {
-    this.setState({ toast: toastMessage });
+  const showToast = (toastMessage: ToastMessage) => {
+    setToast(toastMessage);
   };
 
-  showWarning = (warning: WarningType) => {
-    this.setState({ warning });
+  const showWarning = (warning: WarningType) => {
+    setWarning(warning);
   };
 
-  render() {
-    const { toast, warning, isError, isLoading } = this.state;
+  if (isLoading) return <Loading />;
 
-    if (isLoading) return <Loading />;
+  return (
+    <AppContext.Provider
+      value={{
+        isLoggedIn: !isError,
+        showToast: showToast,
+        showWarning: showWarning,
+      }}
+    >
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(undefined)}
+        />
+      )}
 
-    return (
-      <AppContext.Provider
-        value={{
-          isLoggedIn: !isError,
-          showToast: this.showToast,
-          showWarning: this.showWarning,
-        }}
-      >
-        {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => this.setState({ toast: undefined })}
-          />
-        )}
-        {warning && (
-          <Warning
-            message={warning.message}
-            btn1={warning.btn1}
-            btn2={warning.btn2}
-            variantBtn1={warning.variantBtn1}
-            variantBtn2={warning.variantBtn2}
-            onClose={() => this.setState({ warning: undefined })}
-            handleBtn2={warning.handleBtn2}
-          />
-        )}
-        {this.props.children}
-      </AppContext.Provider>
-    );
-  }
-}
+      {warning && (
+        <Warning
+          message={warning.message}
+          btn1={warning.btn1}
+          btn2={warning.btn2}
+          variantBtn1={warning.variantBtn1}
+          variantBtn2={warning.variantBtn2}
+          onClose={() => setWarning(undefined)}
+          handleBtn2={warning.handleBtn2}
+        />
+      )}
+
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 export const useAppContext = () => {
-  const CONTEXT = useContext(AppContext)
-  return CONTEXT as AppContextType
-}
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useAppContext must be used within an AppProvider');
+  }
+  return context;
+};
 
 export default AppProvider;

@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap'
 
 const Loading = (): React.JSX.Element => {
   return (
-    <div className='flex-center h-screen'>
+    <div className='h-100vh flex-center'>
       <Spinner variant='info' />
     </div>
   )

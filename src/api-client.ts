@@ -2,7 +2,7 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const validateAdmin = async (): Promise<void> => {
+export const validateToken = async (): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
     credentials: "include",
   });
