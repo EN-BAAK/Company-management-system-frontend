@@ -1,0 +1,26 @@
+$xxs: "(max-width: 400px)";
+$xs: "(max-width: 575.9px)";
+$sm: "(min-width: 576px)";
+$md: "(min-width: 768px)";
+$lg: "(min-width: 992px)";
+$xl: "(min-width: 1200px)";
+$xxl: "(min-width: 1400px)";
+
+$lg-max: "(max-width: 992px)";
+
+:root {
+  --time-transition: 0.3s;
+  --time-long: 1s;
+
+  --c-main: #2015ec;
+  --c-main-shadow: #070084e1;
+  --c-main-transparent: #2015ecb3;
+
+  --c-second: #fff;
+  --c-second-shadow: #e1e1e1;
+  --c-second-transparent: #80808078;
+
+  --c-text-main: #626262;
+  --c-black-main: #000;
+  --c-white-main: #fff;
+}

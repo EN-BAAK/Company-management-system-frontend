@@ -1,0 +1,21 @@
+#template-1 {
+  .row {
+    max-width: 550px;
+    min-width: 345px;
+
+    .links-holder {
+      .link {
+        width: fit-content;
+        border: 3px solid;
+
+        .icon {
+          @include same-scale(65px);
+        }
+      }
+
+      .small {
+        font-size: 10px;
+      }
+    }
+  }
+}
