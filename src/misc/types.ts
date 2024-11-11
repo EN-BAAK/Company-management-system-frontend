@@ -9,8 +9,8 @@ export type Warning = {
   message: string;
   btn1: string;
   btn2: string;
-  styleBtn1?: variant;
-  styleBtn2?: variant;
+  variantBtn1?: variant;
+  variantBtn2?: variant;
   handleBtn2: () => void;
 };
 

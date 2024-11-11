@@ -10,33 +10,22 @@ interface ToastProps {
 
 export const Toast = ({ message, type, onClose }: ToastProps) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 2000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    const timer = setTimeout(onClose, 200000);
+    return () => clearTimeout(timer);
   }, [onClose]);
 
-  const iconStyle = type === "SUCCESS" ? "bg-success" : "bg-danger";
-  const lineStyle = type === 'SUCCESS' ? "text-success border-success" : "text-danger border-danger";
-  const innerStyle = type === 'SUCCESS' ? "bg-success" : "bg-danger";
-  const paragraphStyle = type === "SUCCESS" ? "text-success" : "text-danger"
+  const isSuccess = type === "SUCCESS";
 
   return (
-    <div className="my-toast">
-      <div
-        className={`${iconStyle} d-flex align-items-center justify-content-center fs-5 p-2 rounded-circle text-white`}>
-        {type === "SUCCESS"
-          ? <IoMdCheckmark />
-          : <BsExclamationLg />}
+    <div className={`toast-container overflow-hidden rounded-3 shadow-lg position-fixed  ${isSuccess ? "border-success text-success" : "border-danger text-danger"}`}>
+      <div className="d-flex align-items-center gap-2">
+        <div className={`icon rounded-circle p-1 ${isSuccess ? "bg-success" : "bg-danger"} d-flex align-items-center justify-content-center text-white`}>
+          {isSuccess ? <IoMdCheckmark size={"1.2rem"} /> : <BsExclamationLg size={"1.2rem"} />}
+        </div>
+        <p className="mb-0 flex-grow-1">{message}</p>
       </div>
-      <p className={`mb-0 ms-2 fw-medium ${paragraphStyle}`}>
-        {message}
-      </p>
-      <div className={`${lineStyle} line border-2`}>
-        <div className={`${innerStyle} inner-line`}></div>
+      <div className="progress w-100 mt-2">
+        <div className={`progress-bar ${isSuccess ? "bg-success" : "bg-danger"}`}></div>
       </div>
     </div>
   );

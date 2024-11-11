@@ -1,45 +1,15 @@
 .notification-warning {
   background-color: var(--c-second-transparent);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: 998;
 
   .warning-box {
-    background-color: var(--c-second-shadow);
     min-width: 320px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    @include animation(popup, 0.8s ease-out);
-  }
+    max-width: 90%;
+    @include animation(popup, var(--time-transition) ease-out forwards);
 
-  .warning-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border-bottom: 3px solid black;
-    padding: 10px 0;
-    margin-bottom: 10px;
-  }
-
-  .warning-message {
-    font-size: 1.25rem;
-    padding: 0 15px;
-    margin-bottom: 20px;
-  }
-
-  .warning-actions {
-    display: flex;
-    gap: 10px;
-
-    .warning-actions .btn {
-      flex: 1;
+    .warning-header {
+      border-bottom-width: 2px;
+      color: var(--bs-danger);
     }
   }
 }

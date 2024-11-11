@@ -1,82 +1,88 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react'
-import { AppContext as AppContextType, CustomerViewData, Media, ToastMessage, Warning as WarningType } from '../misc/types'
-import { useQuery } from 'react-query'
-import Loading from '../components/Loading'
-import { getCustomers, getMedias, validateAdmin } from '../api-client'
-import { Toast } from '../components/Toast'
-import Warning from '../components/Warning'
+import { createContext, ReactNode, Component, useContext } from 'react';
+import { AppContext as AppContextType, ToastMessage, Warning as WarningType } from '../misc/types';
+import Loading from '../components/Loading';
+import { validateAdmin } from '../api-client';
+import { Toast } from '../components/Toast';
+import Warning from '../components/Warning';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
-const AppContext = createContext<AppContextType | undefined>(undefined)
+interface State {
+  toast?: ToastMessage;
+  warning?: WarningType;
+  isError: boolean;
+  isLoading: boolean;
+}
 
-export const AppProvider = ({ children }: Props): React.JSX.Element => {
-  const [toast, setToast] = useState<ToastMessage | undefined>(undefined)
-  const [warning, setWarning] = useState<WarningType | undefined>(undefined);
-  const [medias, setMedias] = useState<Media[]>([])
-  const [customers, setCustomers] = useState<CustomerViewData[]>([])
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-  const { isError, isLoading } = useQuery("validateToken", validateAdmin, {
-    retry: false,
-    refetchOnWindowFocus: false
-  })
+class AppProvider extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      toast: undefined,
+      warning: undefined,
+      isError: false,
+      isLoading: true,
+    };
+  }
 
-  const fetchSocialMediasData = async () => {
+  async componentDidMount() {
     try {
-      const data = await getMedias()
-      setMedias(data.medias)
+      await validateAdmin();
+      this.setState({ isError: false });
     } catch {
-      setMedias([])
+      this.setState({ isError: true });
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 
-  const fetchCustomersData = async () => {
-    try {
-      const data = await getCustomers()
-      setCustomers(data.customers)
-    } catch {
-      setCustomers([])
-    }
+  showToast = (toastMessage: ToastMessage) => {
+    this.setState({ toast: toastMessage });
+  };
+
+  showWarning = (warning: WarningType) => {
+    this.setState({ warning });
+  };
+
+  render() {
+    const { toast, warning, isError, isLoading } = this.state;
+
+    if (isLoading) return <Loading />;
+
+    return (
+      <AppContext.Provider
+        value={{
+          isLoggedIn: !isError,
+          showToast: this.showToast,
+          showWarning: this.showWarning,
+        }}
+      >
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => this.setState({ toast: undefined })}
+          />
+        )}
+        {warning && (
+          <Warning
+            message={warning.message}
+            btn1={warning.btn1}
+            btn2={warning.btn2}
+            variantBtn1={warning.variantBtn1}
+            variantBtn2={warning.variantBtn2}
+            onClose={() => this.setState({ warning: undefined })}
+            handleBtn2={warning.handleBtn2}
+          />
+        )}
+        {this.props.children}
+      </AppContext.Provider>
+    );
   }
-
-  if (isLoading)
-    return <Loading />
-
-  return (
-    <AppContext.Provider
-      value={{
-        isLoggedIn: !isError,
-        showToast: (toastMessage) => setToast(toastMessage),
-        medias,
-        fetchMedias: fetchSocialMediasData,
-        showWarning: (warning) => setWarning(warning),
-        customers,
-        fetchCustomers: fetchCustomersData
-      }}
-    >
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(undefined)}
-        />
-      )}
-      {warning && (
-        <Warning
-          message={warning.message}
-          btn1={warning.btn1}
-          btn2={warning.btn2}
-          styleBtn1={warning.styleBtn1}
-          styleBtn2={warning.styleBtn2}
-          onClose={() => setWarning(undefined)}
-          handleBtn2={warning.handleBtn2}
-        />
-      )}
-      {children}
-    </AppContext.Provider>
-  )
 }
 
 export const useAppContext = () => {
@@ -84,5 +90,4 @@ export const useAppContext = () => {
   return CONTEXT as AppContextType
 }
 
-
-export default AppProvider
+export default AppProvider;
