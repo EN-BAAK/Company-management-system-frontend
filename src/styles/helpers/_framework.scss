@@ -2,9 +2,7 @@
   cursor: pointer;
 }
 .flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include centering;
 }
 .flex-center-y {
   display: flex;
@@ -15,4 +13,13 @@
 }
 .h-100vh {
   height: 100vh;
+}
+.bg-main {
+  background-color: var(--c-main);
+}
+.bg-main.hover-main:hover {
+  background-color: var(--c-main-hover);
+}
+.text-main {
+  color: var(--c-white-main);
 }

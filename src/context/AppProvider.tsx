@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState, useContext } from 'react';
 import { AppContext as AppContextType, ToastMessage, Warning as WarningType } from '../misc/types';
-import Loading from '../components/Loading';
+import Loading from '../layouts/Loading';
 import { validateToken } from '../api-client';
 import { Toast } from '../components/Toast';
 import Warning from '../components/Warning';

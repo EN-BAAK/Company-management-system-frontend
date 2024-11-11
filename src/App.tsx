@@ -1,6 +1,7 @@
 import React from "react"
-import { BrowserRouter as Router, Routes } from "react-router-dom"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { useAppContext } from "./context/AppProvider"
+import Login from "./pages/Login"
 
 const App = (): React.JSX.Element => {
   const { isLoggedIn } = useAppContext()
@@ -11,11 +12,11 @@ const App = (): React.JSX.Element => {
         <Routes>
           {isLoggedIn ?
             <React.Fragment>
-
+              fsdf
             </React.Fragment>
             :
             <React.Fragment>
-              
+              <Route path="/" element={<Login />} />
             </React.Fragment>
           }
         </Routes>

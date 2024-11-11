@@ -1,0 +1,5 @@
+.primary-button {
+  &:disabled {
+    background-color: var(--c-main-transparent) !important;
+  }
+}

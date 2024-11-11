@@ -4,6 +4,7 @@ export type ToastMessage = {
 };
 
 export type variant = "info" | "danger" | "warning" | "secondary";
+export type inputField = "input";
 
 export type Warning = {
   message: string;
@@ -18,4 +19,20 @@ export type AppContext = {
   isLoggedIn: boolean;
   showToast: (toastMessage: ToastMessage) => void;
   showWarning: (warning: Warning) => void;
+};
+
+export type FormikControl  = {
+  control: inputField;
+  label: string;
+  name: string;
+  type: "text" | "number" | "password";
+  placeholder?: string;
+  formGroupClassName?: string;
+  labelClassName?: string;
+  inputClassName?: string;
+};
+
+export type LoginForm = {
+  phone: "";
+  password: "";
 };
