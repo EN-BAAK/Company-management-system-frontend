@@ -6,11 +6,10 @@ import { useMutation } from 'react-query'
 import { createCompany, editCompany } from '../../api-client'
 import { handleCompanyCreate, handleCompanyEdit } from '../../misc/helpers'
 import { Form, Formik, FormikHelpers } from 'formik'
-import { FaX } from "react-icons/fa6";
 import FormikControl from '../form/FormikControl'
 import Button from '../form/Button'
-import { Card } from 'react-bootstrap'
 import { createCompanyValidationSchema, editCompanyValidationSchema } from '../../misc/config'
+import ModalCard from './ModalCard'
 
 interface Props {
   company: CompanyType,
@@ -70,70 +69,78 @@ const Company = ({ company, onClose, setCompanies }: Props): React.ReactNode => 
   }
 
   return (
-    <div id='company-modal' className='position-fixed flex-center'>
-      <Card className='w-100 mx-2 shadow position-relative'>
-        <button
-          onClick={onClose}
-          className="close-icon bg-transparent position-absolute rounded-circle flex-center">
-          <FaX size={20} />
-        </button>
+    <ModalCard
+      onClose={onClose}
+      title={isEdit
+        ? translating("companies.modal.title.edit")
+        : translating("companies.modal.title.create")}
+    >
+      <Formik
+        initialValues={company}
+        validationSchema={isEdit
+          ? editCompanyValidationSchema(
+          )
+          : createCompanyValidationSchema(
+            translating("companies.modal.form.name.error.required"),
+            translating("companies.modal.form.phone.error.required"),
+          )}
+        onSubmit={onSubmit}
+      >
+        {(formik) => (
+          <Form className='form d-flex flex-column gap-3 w-100'>
+            <FormikControl
+              control='input'
+              name='name'
+              label={translating("companies.modal.form.name.label")}
+              type='text'
+            />
 
-        <Card.Body>
-          <Card.Title className='text-center fw-semibold'>
-            {isEdit
-              ? translating("companies.modal.title.edit")
-              : translating("companies.modal.title.create")}
-          </Card.Title>
+            <FormikControl
+              control='input'
+              name='phone'
+              label={translating("companies.modal.form.phone.label")}
+              type='number'
+            />
 
-          <Formik
-            initialValues={company}
-            validationSchema={isEdit
-              ? editCompanyValidationSchema(
-                translating("companies.modal.form.phone.error.pattern"),
-              )
-              : createCompanyValidationSchema(
-                translating("companies.modal.form.name.error.pattern"),
-                translating("companies.modal.form.phone.error.required"),
-                translating("companies.modal.form.phone.error.pattern"),
-              )}
-            onSubmit={onSubmit}
-          >
-            {(formik) => (
-              <Form className='form d-flex flex-column gap-3 w-100'>
-                <FormikControl
-                  control='input'
-                  name='name'
-                  label={translating("companies.modal.form.name.label")}
-                  type='text'
-                />
+            <FormikControl
+              control='textarea'
+              name='notes'
+              label={translating("companies.modal.form.notes.label")}
+              type='text'
+            />
 
-                <FormikControl
-                  control='input'
-                  name='phone'
-                  label={translating("companies.modal.form.phone.label")}
-                  type='text'
-                />
-
-                <FormikControl
-                  control='textarea'
-                  name='notes'
-                  label={translating("companies.modal.form.notes.label")}
-                  type='text'
-                />
-
-                <Button
-                  type='submit'
-                  disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
-                >
-                  {translating("companies.modal.confirm")}
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </Card.Body>
-      </Card>
-    </div>
+            <Button
+              type='submit'
+              disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
+            >
+              {translating("companies.modal.confirm")}
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </ModalCard>
   )
+
+  // return (
+  //   <div id='company-modal' className='position-fixed flex-center'>
+  //     <Card className='w-100 mx-2 shadow position-relative'>
+  //       <button
+  //         onClick={onClose}
+  //         className="close-icon bg-transparent position-absolute rounded-circle flex-center">
+  //         <FaX size={20} />
+  //       </button>
+
+  //       <Card.Body>
+  //         <Card.Title className='text-center fw-semibold'>
+  //           {isEdit
+  //             ? 
+  //             : 
+  //         </Card.Title>
+
+  //       </Card.Body>
+  //     </Card>
+  //   </div>
+  // )
 }
 
 

@@ -14,11 +14,11 @@ interface Props {
 
 const RecordCard = ({ id, handleDelete, handleSelectRecord, name, phone, withWhatsApp = false }: RecordType & Props): React.ReactNode => {
   const handleWhatsAppClick = () => {
-    window.open(`https://wa.me/${phone}`, '_blank');
+    window.open(`https://wa.me/+972${phone}`, '_blank');
   };
 
   const handlePhoneClick = () => {
-    window.open(`tel:${phone}`);
+    window.open(`tel:+972${phone}`);
   };
 
   return (

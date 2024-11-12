@@ -5,9 +5,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
-const Page = ({ className, children, ...reset }: Props): React.JSX.Element => {
+const Page = ({ children, ...reset }: Props): React.JSX.Element => {
   return (
-    <div className={`flex-1 bg-white ${className}`} {...reset}>
+    <div className="page flex-1 bg-white d-flex flex-column align-items-start overflow-hidden" {...reset}>
       {children}
     </div>
   )

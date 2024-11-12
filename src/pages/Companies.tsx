@@ -82,7 +82,7 @@ const Companies = (): React.JSX.Element => {
     </div>
 
   return (
-    <Page id='companies' className='d-flex flex-column align-items-start overflow-hidden max-h-90vh'>
+    <Page id='companies'>
       <Header name={translating("companies.title")} />
 
       <button

@@ -28,7 +28,11 @@ const Login = (): React.JSX.Element => {
   })
 
   const onSubmit = async (data: LoginForm, formik: FormikHelpers<LoginForm>) => {
-    await mutationLogin.mutateAsync(data)
+    const formattedData: LoginForm = {
+      phone: String(data.phone),
+      password: data.password
+    }
+    await mutationLogin.mutateAsync(formattedData)
     formik.setSubmitting(false)
   }
 
@@ -50,7 +54,7 @@ const Login = (): React.JSX.Element => {
               control='input'
               name='phone'
               label={translating("login.phone-number.label")}
-              type="text"
+              type="number"
               Icon={<FiPhone />}
             />
 

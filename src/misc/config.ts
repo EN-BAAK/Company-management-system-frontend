@@ -11,13 +11,10 @@ export const initialLoginValues: LoginForm = {
 
 export const loginValidationSchema = (
   phoneRequired: string,
-  phonePattern: string,
   password: string
 ) =>
   Yup.object({
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, phonePattern)
-      .required(phoneRequired),
+    phone: Yup.number().required(phoneRequired),
     password: Yup.string().required(password),
   });
 
@@ -45,43 +42,34 @@ export const SettingsNavArray = [
 export const createWorkerValidationSchema = (
   fullNameRequired: string,
   phoneRequired: string,
-  phonePattern: string,
-  passwordRequired: string,
-  personalIDPattern: string
+  passwordRequired: string
 ) =>
   Yup.object({
     fullName: Yup.string().required(fullNameRequired),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, phonePattern)
-      .required(phoneRequired),
+    phone: Yup.number().required(phoneRequired),
     password: Yup.string().required(passwordRequired),
-    personal_id: Yup.string().matches(/^[0-9]+$/, personalIDPattern),
+    personal_id: Yup.number(),
   });
 
-export const editWorkerValidationSchema = (
-  phonePattern: string,
-  personalIDPattern: string
-) =>
+export const editWorkerValidationSchema = () =>
   Yup.object({
-    phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
-    personal_id: Yup.string().matches(/^[0-9]+$/, personalIDPattern),
+    fullName: Yup.string(),
+    phone: Yup.number(),
   });
 
 export const createCompanyValidationSchema = (
   nameRequired: string,
-  phoneRequired: string,
-  phonePattern: string
+  phoneRequired: string
 ) =>
   Yup.object({
     name: Yup.string().required(nameRequired),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, phonePattern)
-      .required(phoneRequired),
+    phone: Yup.number().required(phoneRequired),
   });
 
-export const editCompanyValidationSchema = (phonePattern: string) =>
+export const editCompanyValidationSchema = () =>
   Yup.object({
-    phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
+    name: Yup.string(),
+    phone: Yup.number(),
   });
 
 export const editAdminFullNameSchema = (fullNameRequired: string) => {
@@ -101,7 +89,7 @@ export const editAdminPasswordSchema = (
 ) => {
   Yup.object({
     password: Yup.string().required(passwordRequired),
-    newPassword: Yup.string().required(newPasswordRequired),
+    newPassword: Yup.number().required(newPasswordRequired),
   });
 };
 
@@ -112,13 +100,10 @@ export const initialValueEditAdminPhone: editPhoneAdmin = {
 
 export const editAdminPhoneSchema = (
   passwordRequired: string,
-  phoneRequired: string,
-  phonePattern: string
+  phoneRequired: string
 ) => {
   Yup.object({
     password: Yup.string().required(passwordRequired),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, phonePattern)
-      .required(phoneRequired),
+    newPhone: Yup.number().required(phoneRequired),
   });
 };

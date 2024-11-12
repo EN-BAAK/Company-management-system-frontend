@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { Worker as WorkerType } from '../../misc/types'
-import { Card } from 'react-bootstrap'
 import { Form, Formik, FormikHelpers } from 'formik'
 import FormikControl from '../form/FormikControl'
 import Button from '../form/Button'
@@ -10,7 +9,7 @@ import { useMutation } from 'react-query'
 import { createWorker, editWorker } from '../../api-client'
 import { useAppContext } from '../../context/AppProvider'
 import { handleWorkerCreate, handleWorkerEdit } from '../../misc/helpers'
-import { FaX } from "react-icons/fa6";
+import ModalCard from './ModalCard'
 
 
 interface Props {
@@ -51,20 +50,16 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
 
   const onEdit = async (data: WorkerType) => {
     const formData = new FormData()
-
     if (data.fullName)
       formData.append("fullName", data.fullName)
     if (data.phone)
-      formData.append("phone", data.phone)
+      formData.append("phone", String(data.phone))
     if (data.personal_id)
-      formData.append("personal_id", data.personal_id)
-    if (data.work_type)
-      formData.append("work_type", data.work_type)
+      formData.append("personal_id", String(data.personal_id))
     if (data.password)
       formData.append("password", data.password)
     if (data.notes)
       formData.append("notes", data.notes)
-
     await mutationEdit.mutateAsync({ formData, id: data.id })
   }
 
@@ -77,93 +72,69 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
   }
 
   return (
-    <div id='worker-modal' className='position-fixed flex-center'>
-      <Card className='w-100 mx-2 shadow position-relative'>
-        <button
-          onClick={onClose}
-          className="close-icon bg-transparent position-absolute rounded-circle flex-center">
-          <FaX size={20} />
-        </button>
+    <ModalCard
+      onClose={onClose}
+      title={isEdit
+        ? translating("workers.modal.title.edit")
+        : translating("workers.modal.title.create")}>
+      <Formik
+        initialValues={worker}
+        validationSchema={isEdit
+          ? editWorkerValidationSchema()
+          : createWorkerValidationSchema(
+            translating("workers.modal.form.fullName.error.required"),
+            translating("workers.modal.form.phone.error.required"),
+            translating("workers.modal.form.password.error.required"),
+          )}
+        onSubmit={onSubmit}
+      >
+        {formik => (
+          <Form className='form d-flex flex-column gap-3 w-100'>
+            <FormikControl
+              control='input'
+              name='fullName'
+              label={translating("workers.modal.form.fullName.label")}
+              type='text'
+            />
 
-        <Card.Body>
-          <Card.Title className='text-center fw-semibold'>
-            {isEdit
-              ? translating("workers.modal.title.edit")
-              : translating("workers.modal.title.create")}
-          </Card.Title>
+            <FormikControl
+              control='input'
+              name='phone'
+              label={translating("workers.modal.form.phone.label")}
+              type='text'
+            />
 
-          <Formik
-            initialValues={worker}
-            validationSchema={isEdit
-              ? editWorkerValidationSchema(
-                translating("workers.modal.form.phone.error.pattern"),
-                translating("workers.modal.form.personal_id.error.pattern")
-              )
-              : createWorkerValidationSchema(
-                translating("workers.modal.form.fullName.error.pattern"),
-                translating("workers.modal.form.phone.error.required"),
-                translating("workers.modal.form.phone.error.pattern"),
-                translating("workers.modal.form.password.error.required"),
-                translating("workers.modal.form.personal_id.error.pattern")
-              )}
-            onSubmit={onSubmit}
-          >
-            {formik => (
-              <Form className='form d-flex flex-column gap-3 w-100'>
-                <FormikControl
-                  control='input'
-                  name='fullName'
-                  label={translating("workers.modal.form.fullName.label")}
-                  type='text'
-                />
+            <FormikControl
+              control='input'
+              name='personal_id'
+              label={translating("workers.modal.form.personal_id.label")}
+              type='text'
+            />
 
-                <FormikControl
-                  control='input'
-                  name='phone'
-                  label={translating("workers.modal.form.phone.label")}
-                  type='text'
-                />
+            <FormikControl
+              control='input'
+              name='password'
+              label={translating("workers.modal.form.password.label")}
+              type='password'
+            />
 
-                <FormikControl
-                  control='input'
-                  name='work_type'
-                  label={translating("workers.modal.form.work_type.label")}
-                  type='text'
-                />
+            <FormikControl
+              control='textarea'
+              name='notes'
+              label={translating("workers.modal.form.notes.label")}
+              type='text'
+            />
 
-                <FormikControl
-                  control='input'
-                  name='personal_id'
-                  label={translating("workers.modal.form.personal_id.label")}
-                  type='text'
-                />
-
-                <FormikControl
-                  control='input'
-                  name='password'
-                  label={translating("workers.modal.form.password.label")}
-                  type='password'
-                />
-
-                <FormikControl
-                  control='textarea'
-                  name='notes'
-                  label={translating("workers.modal.form.notes.label")}
-                  type='text'
-                />
-
-                <Button
-                  type='submit'
-                  disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
-                >
-                  {translating("workers.modal.confirm")}
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </Card.Body>
-      </Card>
-    </div>
+            <Button
+              type='submit'
+              disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
+            >
+              {translating("workers.modal.confirm")}
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </ModalCard >
   )
 }
 

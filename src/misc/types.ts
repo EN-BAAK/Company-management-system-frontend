@@ -40,8 +40,8 @@ export type FormikControl = {
 };
 
 export type LoginForm = {
-  phone: "";
-  password: "";
+  phone: string;
+  password: string;
 };
 
 export type editPasswordAdmin = {
@@ -59,7 +59,6 @@ export type Worker = {
   fullName: string;
   phone: string;
   personal_id: string;
-  work_type?: string;
   password?: string;
   notes?: string;
 };

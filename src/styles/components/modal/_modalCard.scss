@@ -1,5 +1,4 @@
-#worker-modal,
-#company-modal {
+.modal-card {
   background-color: var(--c-second-transparent);
   @include set-position(0, 0, 0, 0);
   z-index: 999;

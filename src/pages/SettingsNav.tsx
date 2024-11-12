@@ -25,8 +25,8 @@ const SettingsNav = (): React.JSX.Element => {
   })
 
   return (
-    <Page id='setting' className='pt-5'>
-      <nav className='d-flex flex-column px-2 gap-5 fs-4'>
+    <Page id='setting' >
+      <nav className='d-flex flex-column px-2 gap-5 fs-4 mt-5'>
         {SettingsNavArray.map(nav => (
           <NavLink className="text-black" key={`settings-nav-${nav.id}`} to={nav.path}>
             <nav.Icon className='ms-2' />
