@@ -60,3 +60,16 @@ export const fetchCompanies = async (page: number = 1) => {
 
   return responseBody;
 };
+
+export const logout = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
