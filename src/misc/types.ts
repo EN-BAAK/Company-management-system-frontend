@@ -5,6 +5,7 @@ export type ToastMessage = {
 
 export type variant = "info" | "danger" | "warning" | "secondary";
 export type inputField = "input";
+export type inputType = "text" | "number" | "password";
 
 export type Warning = {
   message: string;
@@ -21,18 +22,38 @@ export type AppContext = {
   showWarning: (warning: Warning) => void;
 };
 
-export type FormikControl  = {
+export type FormikControl = {
   control: inputField;
   label: string;
   name: string;
-  type: "text" | "number" | "password";
+  type: inputType;
   placeholder?: string;
   formGroupClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
+  Icon?: React.ReactNode;
 };
 
 export type LoginForm = {
   phone: "";
   password: "";
+};
+
+export type Worker = {
+  id: number;
+  fullName: string;
+  phone: string;
+  personal_id: string;
+};
+
+export type Company = {
+  id: number;
+  name: string;
+  phone: string;
+};
+
+export type Record = {
+  id: number;
+  name: string;
+  phone: string;
 };

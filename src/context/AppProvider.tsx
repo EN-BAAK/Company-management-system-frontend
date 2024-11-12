@@ -1,5 +1,9 @@
 import { createContext, ReactNode, useState, useContext } from 'react';
-import { AppContext as AppContextType, ToastMessage, Warning as WarningType } from '../misc/types';
+import {
+  AppContext as AppContextType,
+  ToastMessage,
+  Warning as WarningType,
+} from '../misc/types';
 import Loading from '../layouts/Loading';
 import { validateToken } from '../api-client';
 import { Toast } from '../components/Toast';
@@ -29,14 +33,14 @@ const AppProvider = ({ children }: Props): React.JSX.Element => {
     setWarning(warning);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <div className='h-100vh'><Loading /></div>;
 
   return (
     <AppContext.Provider
       value={{
         isLoggedIn: !isError,
-        showToast: showToast,
-        showWarning: showWarning,
+        showToast,
+        showWarning,
       }}
     >
       {toast && (

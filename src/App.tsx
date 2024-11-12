@@ -2,17 +2,24 @@ import React from "react"
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { useAppContext } from "./context/AppProvider"
 import Login from "./pages/Login"
+import BottomNav from "./layouts/BottomNav"
+import SettingsNav from "./pages/SettingsNav"
+import Workers from "./pages/Workers"
+import Companies from "./pages/Companies"
 
 const App = (): React.JSX.Element => {
   const { isLoggedIn } = useAppContext()
 
   return (
-    <main id="App">
+    <main id="App" className="d-flex flex-column">
       <Router>
         <Routes>
           {isLoggedIn ?
             <React.Fragment>
-              fsdf
+              <Route path="/settings" element={<SettingsNav />} />
+              <Route path="/settings/workers" element={<Workers />} />
+              <Route path="/settings/companies" element={<Companies />} />
+              <Route path="/" element={<SettingsNav />} />
             </React.Fragment>
             :
             <React.Fragment>
@@ -20,6 +27,7 @@ const App = (): React.JSX.Element => {
             </React.Fragment>
           }
         </Routes>
+        {isLoggedIn && <BottomNav />}
       </Router>
     </main>
   )

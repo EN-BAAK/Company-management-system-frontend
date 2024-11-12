@@ -1,0 +1,10 @@
+.formik-controller {
+  input {
+    padding-right: 2.5rem;
+  }
+  svg {
+    @include center-y;
+    right: 1rem;
+    font-size: 1.25rem;
+  }
+}

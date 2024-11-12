@@ -7,8 +7,8 @@
 /* Global */
 @import "./styles/screens/global-rule";
 
-// /* Pages */
-// @import "./styles/screens/login";
+/* Pages */
+@import "./styles/screens/workers";
 // @import "./styles/screens/settings";
 // @import "./styles/screens/socialMedias";
 // @import "./styles/screens/createCustomer";
@@ -16,12 +16,14 @@
 // @import "./styles/screens/customers";
 
 // /* Layouts */
-// @import "./styles/layouts/_header";
+@import "./styles/layouts/bottomNav";
+@import "./styles/layouts/header";
 
 // /* Components */
 @import "./styles/components/toast";
 @import "./styles/components/warning";
-@import "./styles/components/form/Button";
+@import "./styles/components/form/button";
+@import "./styles/components/form/input";
 // @import "./styles/components/button";
 // @import "./styles/components/addMediaModal";
 // @import "./styles/components/exitButton";

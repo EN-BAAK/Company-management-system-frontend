@@ -1,0 +1,8 @@
+header {
+  height: 8vh;
+
+  svg {
+    @include center-y;
+    left: 2rem;
+  }
+}

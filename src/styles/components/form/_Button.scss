@@ -1,4 +1,7 @@
 .primary-button {
+  &:hover {
+    background-color: var(--c-main-hover);
+  }
   &:disabled {
     background-color: var(--c-main-transparent) !important;
   }

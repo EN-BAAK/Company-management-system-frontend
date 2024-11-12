@@ -17,9 +17,15 @@
 .bg-main {
   background-color: var(--c-main);
 }
-.bg-main.hover-main:hover {
-  background-color: var(--c-main-hover);
-}
 .text-main {
   color: var(--c-white-main);
+}
+.fs-special {
+  font-family: var(--font-special);
+}
+.flex-1 {
+  flex: 1;
+}
+.w-fit {
+  width: fit-content;
 }

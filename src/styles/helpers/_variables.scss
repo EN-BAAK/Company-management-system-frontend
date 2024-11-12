@@ -9,12 +9,13 @@ $xxl: "(min-width: 1400px)";
 $lg-max: "(max-width: 992px)";
 
 :root {
+  --font-special: "Oswald", sans-serif;
+
   --time-transition: 0.3s;
   --time-long: 1s;
 
   --c-main: #2015ec;
   --c-main-hover: #2015ecd3;
-  --c-main-shadow: #070084e1;
   --c-main-transparent: #2015ecb3;
 
   --c-second: #fff;

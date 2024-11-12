@@ -28,3 +28,35 @@ export const login = async (formData: LoginForm) => {
 
   return responseBody;
 };
+
+export const fetchWorkers = async (page: number = 1) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/user?page=${page}&offset=20`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const fetchCompanies = async (page: number = 1) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/company?page=${page}&offset=20`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};

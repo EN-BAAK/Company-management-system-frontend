@@ -9,6 +9,8 @@ import { useMutation, useQueryClient } from 'react-query'
 import { useAppContext } from '../context/AppProvider'
 import { login } from '../api-client'
 import { LoginForm } from '../misc/types'
+import { FiPhone } from "react-icons/fi";
+import { IoLockOpenOutline } from "react-icons/io5";
 
 const Login = (): React.JSX.Element => {
   const { showToast } = useAppContext()
@@ -26,7 +28,6 @@ const Login = (): React.JSX.Element => {
   })
 
   const onSubmit = async (data: LoginForm, formik: FormikHelpers<LoginForm>) => {
-    console.log("Enter")
     await mutationLogin.mutateAsync(data)
     formik.setSubmitting(false)
   }
@@ -37,7 +38,10 @@ const Login = (): React.JSX.Element => {
 
       <Formik
         initialValues={initialLoginValues}
-        validationSchema={loginValidationSchema(translating("login.phone-number.error"), translating("login.password.error"))}
+        validationSchema={loginValidationSchema(
+          translating("login.phone-number.error.required"),
+          translating("login.phone-number.error.pattern"),
+          translating("login.password.error"))}
         onSubmit={onSubmit}
       >
         {formik => (
@@ -47,6 +51,7 @@ const Login = (): React.JSX.Element => {
               name='phone'
               label={translating("login.phone-number.label")}
               type="text"
+              Icon={<FiPhone />}
             />
 
             <FormikControl
@@ -54,8 +59,8 @@ const Login = (): React.JSX.Element => {
               name='password'
               label={translating("login.password.label")}
               type="password"
+              Icon={<IoLockOpenOutline />}
             />
-
             <Button
               type='submit'
               disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
