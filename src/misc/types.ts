@@ -8,6 +8,7 @@ export type ToastMessage = {
 export type variant = "info" | "danger" | "warning" | "secondary";
 export type inputField = "input" | "textarea";
 export type inputType = "text" | "number" | "password";
+export type role = "admin" | "worker";
 
 export type Warning = {
   message: string;
@@ -23,11 +24,12 @@ export type AppContext = {
   showToast: (toastMessage: ToastMessage) => void;
   showWarning: (warning: Warning) => void;
   setLayout: Dispatch<SetStateAction<boolean>>;
+  user: User;
 };
 
 export type FormikControl = {
   control: inputField;
-  label: string;
+  label?: string;
   name: string;
   type?: inputType;
   placeholder?: string;
@@ -40,6 +42,16 @@ export type FormikControl = {
 export type LoginForm = {
   phone: "";
   password: "";
+};
+
+export type editPasswordAdmin = {
+  password: string;
+  newPassword: string;
+};
+
+export type editPhoneAdmin = {
+  password: string;
+  newPhone: string;
 };
 
 export type Worker = {
@@ -57,6 +69,12 @@ export type Company = {
   name: string;
   phone: string;
   notes?: string;
+};
+
+export type User = {
+  id: number;
+  fullName: string;
+  role: role;
 };
 
 export type Record = {

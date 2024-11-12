@@ -2,6 +2,7 @@ import { createContext, ReactNode, useState, useContext } from 'react';
 import {
   AppContext as AppContextType,
   ToastMessage,
+  User as UserType,
   Warning as WarningType,
 } from '../misc/types';
 import Loading from '../layouts/Loading';
@@ -21,11 +22,17 @@ const AppProvider = ({ children }: Props): React.JSX.Element => {
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
   const [warning, setWarning] = useState<WarningType | undefined>(undefined);
   const [layout, setLayout] = useState<boolean>(false)
+  const [user, setUser] = useState<UserType>({ id: -1, fullName: "", role: "worker" })
 
   const { isError, isLoading } = useQuery("validateToken", validateToken, {
     retry: false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    onSuccess: (fetchedData: { user: UserType }) => {
+      const user = fetchedData.user
+      setUser(user)
+    }
   });
+
 
   const showToast = (toastMessage: ToastMessage) => {
     setToast(toastMessage);
@@ -43,7 +50,8 @@ const AppProvider = ({ children }: Props): React.JSX.Element => {
         isLoggedIn: !isError,
         showToast,
         showWarning,
-        setLayout
+        setLayout,
+        user
       }}
     >
       {toast && (

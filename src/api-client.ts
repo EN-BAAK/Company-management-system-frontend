@@ -1,6 +1,10 @@
-// import { EditPassword, EditPhoneNumber, Login } from "./misc/types";
-
-import { Company, LoginForm, Worker } from "./misc/types";
+import {
+  Company,
+  editPasswordAdmin,
+  editPhoneAdmin,
+  LoginForm,
+  Worker,
+} from "./misc/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,9 +13,11 @@ export const validateToken = async (): Promise<void> => {
     credentials: "include",
   });
 
+  const responseBody = await response.json();
+
   if (!response.ok) throw new Error("Error check verification");
 
-  return response.json();
+  return responseBody;
 };
 
 export const login = async (formData: LoginForm) => {
@@ -157,3 +163,63 @@ export const editCompany = async (data: { formData: FormData; id: number }) => {
 
   return responseBody;
 };
+
+export const editFullName = async (data: { newFullName: string }) => {
+  const response = await fetch(`${API_BASE_URL}/api/admin/edit/fullName`, {
+    method: "put",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const editPassword = async (data: editPasswordAdmin) => {
+  const response = await fetch(`${API_BASE_URL}/api/admin/edit/password`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const editPhone = async (data: editPhoneAdmin) => {
+  const response = await fetch(`${API_BASE_URL}/api/admin/edit/phone`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+// export const editFullName = async (data: { fullName: string }) => {
+//   const response = await fetch(`${API_BASE_URL}/api/admin/edit/fullName`, {
+//     method: "PATCH",
+//     credentials: "include",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   });
+
+//   const responseBody = await response.json();
+
+//   if (!response.ok) throw new Error(responseBody.message);
+
+//   return responseBody;
+// };

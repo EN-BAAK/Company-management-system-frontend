@@ -81,7 +81,7 @@ const Workers = (): React.JSX.Element => {
     </div>
 
   return (
-    <Page id='workers' className='d-flex flex-column align-items-start overflow-hidden'>
+    <Page id='workers' className='d-flex flex-column align-items-start overflow-hidden max-h-90vh'>
       <Header name={translating("workers.title")} />
 
       <button

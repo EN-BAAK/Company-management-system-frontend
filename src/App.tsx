@@ -6,6 +6,7 @@ import BottomNav from "./layouts/BottomNav"
 import SettingsNav from "./pages/SettingsNav"
 import Workers from "./pages/Workers"
 import Companies from "./pages/Companies"
+import AdminSettings from "./pages/AdminSettings"
 
 const App = (): React.JSX.Element => {
   const { isLoggedIn } = useAppContext()
@@ -19,6 +20,7 @@ const App = (): React.JSX.Element => {
               <Route path="/settings" element={<SettingsNav />} />
               <Route path="/settings/workers" element={<Workers />} />
               <Route path="/settings/companies" element={<Companies />} />
+              <Route path="/settings/admin" element={<AdminSettings />} />
               <Route path="/" element={<SettingsNav />} />
             </React.Fragment>
             :

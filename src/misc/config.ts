@@ -1,4 +1,4 @@
-import { LoginForm } from "./types";
+import { editPasswordAdmin, editPhoneAdmin, LoginForm } from "./types";
 import * as Yup from "yup";
 import { PiUsersThreeBold } from "react-icons/pi";
 import { FaRegBuilding } from "react-icons/fa";
@@ -70,7 +70,7 @@ export const editWorkerValidationSchema = (
 export const createCompanyValidationSchema = (
   nameRequired: string,
   phoneRequired: string,
-  phonePattern: string,
+  phonePattern: string
 ) =>
   Yup.object({
     name: Yup.string().required(nameRequired),
@@ -83,3 +83,42 @@ export const editCompanyValidationSchema = (phonePattern: string) =>
   Yup.object({
     phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
   });
+
+export const editAdminFullNameSchema = (fullNameRequired: string) => {
+  Yup.object({
+    newFullName: Yup.string().required(fullNameRequired),
+  });
+};
+
+export const initialValueEditAdminPassword: editPasswordAdmin = {
+  password: "",
+  newPassword: "",
+};
+
+export const editAdminPasswordSchema = (
+  passwordRequired: string,
+  newPasswordRequired: string
+) => {
+  Yup.object({
+    password: Yup.string().required(passwordRequired),
+    newPassword: Yup.string().required(newPasswordRequired),
+  });
+};
+
+export const initialValueEditAdminPhone: editPhoneAdmin = {
+  password: "",
+  newPhone: "",
+};
+
+export const editAdminPhoneSchema = (
+  passwordRequired: string,
+  phoneRequired: string,
+  phonePattern: string
+) => {
+  Yup.object({
+    password: Yup.string().required(passwordRequired),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, phonePattern)
+      .required(phoneRequired),
+  });
+};
