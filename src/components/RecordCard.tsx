@@ -22,7 +22,7 @@ const RecordCard = ({ id, handleDelete, handleSelectRecord, name, phone, withWha
   };
 
   return (
-    <Card>
+    <Card className='w-100'>
       <Card.Body>
         <Card.Text className='text-center fw-semibold fs-4'>{name}</Card.Text>
         <div className="box bg-body-secondary flex-center-y justify-content-between p-3 w-100 fs-3">

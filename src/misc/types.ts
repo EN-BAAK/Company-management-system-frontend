@@ -6,7 +6,7 @@ export type ToastMessage = {
 };
 
 export type variant = "info" | "danger" | "warning" | "secondary";
-export type inputField = "input";
+export type inputField = "input" | "textarea";
 export type inputType = "text" | "number" | "password";
 
 export type Warning = {
@@ -29,7 +29,7 @@ export type FormikControl = {
   control: inputField;
   label: string;
   name: string;
-  type: inputType;
+  type?: inputType;
   placeholder?: string;
   formGroupClassName?: string;
   labelClassName?: string;
@@ -49,12 +49,14 @@ export type Worker = {
   personal_id: string;
   work_type?: string;
   password?: string;
+  notes?: string;
 };
 
 export type Company = {
   id: number;
   name: string;
   phone: string;
+  notes?: string;
 };
 
 export type Record = {

@@ -1,5 +1,11 @@
 .formik-controller {
-  input {
+  textarea {
+    resize: none;
+    height: 150px;
+  }
+
+  input,
+  textarea {
     &.with-icon {
       padding-right: 2.5rem;
     }

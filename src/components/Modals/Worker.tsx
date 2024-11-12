@@ -62,6 +62,8 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
       formData.append("work_type", data.work_type)
     if (data.password)
       formData.append("password", data.password)
+    if (data.notes)
+      formData.append("notes", data.notes)
 
     await mutationEdit.mutateAsync({ formData, id: data.id })
   }
@@ -141,6 +143,13 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
                   name='password'
                   label={translating("workers.modal.form.password.label")}
                   type='password'
+                />
+
+                <FormikControl
+                  control='textarea'
+                  name='notes'
+                  label={translating("workers.modal.form.notes.label")}
+                  type='text'
                 />
 
                 <Button

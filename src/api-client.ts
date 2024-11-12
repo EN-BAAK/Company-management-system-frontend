@@ -1,6 +1,6 @@
 // import { EditPassword, EditPhoneNumber, Login } from "./misc/types";
 
-import { LoginForm, Worker } from "./misc/types";
+import { Company, LoginForm, Worker } from "./misc/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -117,6 +117,35 @@ export const createWorker = async (formData: Worker) => {
 
 export const editWorker = async (data: { formData: FormData; id: number }) => {
   const response = await fetch(`${API_BASE_URL}/api/user/${data.id}`, {
+    method: "PUT",
+    credentials: "include",
+    body: data.formData,
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const createCompany = async (formData: Company) => {
+  const response = await fetch(`${API_BASE_URL}/api/company`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const editCompany = async (data: { formData: FormData; id: number }) => {
+  const response = await fetch(`${API_BASE_URL}/api/company/${data.id}`, {
     method: "PUT",
     credentials: "include",
     body: data.formData,

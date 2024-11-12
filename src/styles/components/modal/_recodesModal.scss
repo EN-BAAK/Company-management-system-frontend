@@ -1,0 +1,25 @@
+#worker-modal,
+#company-modal {
+  background-color: var(--c-second-transparent);
+  @include set-position(0, 0, 0, 0);
+  z-index: 999;
+
+  .card {
+    max-height: 80%;
+    overflow: auto;
+
+    .card-title {
+      color: var(--c-main);
+    }
+
+    .close-icon {
+      @include same-scale(35px);
+      border: 3px solid var(--c-main);
+      @include set-position(25px, auto, auto, 25px);
+
+      svg {
+        color: var(--c-main);
+      }
+    }
+  }
+}

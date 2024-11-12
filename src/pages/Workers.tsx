@@ -5,7 +5,6 @@ import { useMutation, useQuery } from 'react-query';
 import { deleteWorker, fetchWorkers } from '../api-client';
 import { useAppContext } from '../context/AppProvider';
 import RecordCard from '../components/RecordCard';
-import { Col, Row } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Scroll from '../layouts/Scroll';
 import Loading from '../layouts/Loading';
@@ -92,7 +91,8 @@ const Workers = (): React.JSX.Element => {
           personal_id: "",
           phone: "",
           work_type: "",
-          password: ""
+          password: "",
+          notes: ""
         })}
         className='m-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1'>
         {translating("workers.add")}
@@ -109,28 +109,29 @@ const Workers = (): React.JSX.Element => {
             loader={<></>}
             scrollThreshold={0.9}
           >
-            <Row className='align-items-start justify-content-start g-2 py-2'>
+            <div className='d-flex flex-column align-items-start justify-content-start gap-2 py-2'>
               {workers.map(worker => (
-                <Col key={`worker-${worker.id}`} xs={12} sm={6}>
-                  <RecordCard
-                    handleDelete={handleDelete}
-                    withWhatsApp
-                    id={worker.id}
-                    name={worker.fullName}
-                    phone={worker.phone}
-                    handleSelectRecord={() => {
-                      setSelectedWorkers({
-                        id: worker.id,
-                        fullName: worker.fullName,
-                        personal_id: worker.personal_id,
-                        phone: worker.phone,
-                        password: ""
-                      })
-                    }}
-                  />
-                </Col>
+                <RecordCard
+                  key={`worker-${worker.id}`}
+                  handleDelete={handleDelete}
+                  withWhatsApp
+                  id={worker.id}
+                  name={worker.fullName}
+                  phone={worker.phone}
+                  handleSelectRecord={() => {
+                    setSelectedWorkers({
+                      id: worker.id,
+                      fullName: worker.fullName,
+                      personal_id: worker.personal_id,
+                      phone: worker.phone,
+                      work_type: worker.work_type,
+                      password: "",
+                      notes: worker.notes
+                    })
+                  }}
+                />
               ))}
-            </Row>
+            </div>
           </InfiniteScroll>
         </Scroll >}
 

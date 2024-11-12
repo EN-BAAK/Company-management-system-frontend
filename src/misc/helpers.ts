@@ -58,7 +58,8 @@ export const handleCompanyEdit = (
     const index = prevCompanies.findIndex(
       (company) => company.id === newCompany.id
     );
-
-    return prevCompanies.splice(index, 1, newCompany);
+    const newCompanies = prevCompanies;
+    newCompanies[index] = newCompany;
+    return [...newCompanies];
   });
 };

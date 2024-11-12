@@ -63,7 +63,23 @@ export const editWorkerValidationSchema = (
   personalIDPattern: string
 ) =>
   Yup.object({
-    fullName: Yup.string(),
     phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
     personal_id: Yup.string().matches(/^[0-9]+$/, personalIDPattern),
+  });
+
+export const createCompanyValidationSchema = (
+  nameRequired: string,
+  phoneRequired: string,
+  phonePattern: string,
+) =>
+  Yup.object({
+    name: Yup.string().required(nameRequired),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, phonePattern)
+      .required(phoneRequired),
+  });
+
+export const editCompanyValidationSchema = (phonePattern: string) =>
+  Yup.object({
+    phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
   });
