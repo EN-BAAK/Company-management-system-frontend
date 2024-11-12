@@ -8,10 +8,11 @@ import { FaWhatsapp } from "react-icons/fa";
 
 interface Props {
   withWhatsApp?: boolean,
-  handleDelete: (id: number, name: string) => void
+  handleDelete: (id: number, name: string) => void,
+  handleSelectRecord: () => void
 }
 
-const RecordCard = ({ id, handleDelete, name, phone, withWhatsApp = false }: RecordType & Props): React.ReactNode => {
+const RecordCard = ({ id, handleDelete, handleSelectRecord, name, phone, withWhatsApp = false }: RecordType & Props): React.ReactNode => {
   const handleWhatsAppClick = () => {
     window.open(`https://wa.me/${phone}`, '_blank');
   };
@@ -24,7 +25,6 @@ const RecordCard = ({ id, handleDelete, name, phone, withWhatsApp = false }: Rec
     <Card>
       <Card.Body>
         <Card.Text className='text-center fw-semibold fs-4'>{name}</Card.Text>
-
         <div className="box bg-body-secondary flex-center-y justify-content-between p-3 w-100 fs-3">
           <GoTrash
             onClick={() => handleDelete(id, name)}
@@ -32,7 +32,9 @@ const RecordCard = ({ id, handleDelete, name, phone, withWhatsApp = false }: Rec
           <FiPhoneCall onClick={handlePhoneClick} style={{ cursor: 'pointer' }} />
           {withWhatsApp &&
             <FaWhatsapp onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }} />}
-          <CiEdit />
+          <CiEdit
+            onClick={handleSelectRecord}
+          />
         </div>
       </Card.Body>
     </Card>

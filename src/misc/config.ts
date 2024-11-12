@@ -41,3 +41,29 @@ export const SettingsNavArray = [
     Icon: RiAdminLine,
   },
 ];
+
+export const createWorkerValidationSchema = (
+  fullNameRequired: string,
+  phoneRequired: string,
+  phonePattern: string,
+  passwordRequired: string,
+  personalIDPattern: string
+) =>
+  Yup.object({
+    fullName: Yup.string().required(fullNameRequired),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, phonePattern)
+      .required(phoneRequired),
+    password: Yup.string().required(passwordRequired),
+    personal_id: Yup.string().matches(/^[0-9]+$/, personalIDPattern),
+  });
+
+export const editWorkerValidationSchema = (
+  phonePattern: string,
+  personalIDPattern: string
+) =>
+  Yup.object({
+    fullName: Yup.string(),
+    phone: Yup.string().matches(/^[0-9]+$/, phonePattern),
+    personal_id: Yup.string().matches(/^[0-9]+$/, personalIDPattern),
+  });

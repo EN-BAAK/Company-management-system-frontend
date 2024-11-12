@@ -1,6 +1,8 @@
 .formik-controller {
   input {
-    padding-right: 2.5rem;
+    &.with-icon {
+      padding-right: 2.5rem;
+    }
   }
   svg {
     @include center-y;

@@ -12,7 +12,7 @@ export const handleWorkerDelete = (
   setWorkers: Dispatch<SetStateAction<Worker[]>>
 ) => {
   const newWorkers = workers.filter((worker) => worker.id !== id);
-  setWorkers(newWorkers); 
+  setWorkers(newWorkers);
 };
 
 export const handleCompanyDelete = (
@@ -21,5 +21,44 @@ export const handleCompanyDelete = (
   setCompany: Dispatch<SetStateAction<Company[]>>
 ) => {
   const newWorkers = company.filter((com) => com.id !== id);
-  setCompany(newWorkers); 
+  setCompany(newWorkers);
+};
+
+export const handleWorkerCreate = (
+  newWorker: Worker,
+  setWorkers: Dispatch<SetStateAction<Worker[]>>
+) => {
+  setWorkers((prevWorkers) => [newWorker, ...prevWorkers]);
+};
+
+export const handleCompanyCreate = (
+  newCompany: Company,
+  setCompanies: Dispatch<SetStateAction<Company[]>>
+) => {
+  setCompanies((prevCompanies) => [newCompany, ...prevCompanies]);
+};
+
+export const handleWorkerEdit = (
+  newWorker: Worker,
+  setWorkers: Dispatch<SetStateAction<Worker[]>>
+) => {
+  setWorkers((prevWorkers) => {
+    const index = prevWorkers.findIndex((worker) => worker.id === newWorker.id);
+    const newWorkers = prevWorkers;
+    newWorkers[index] = newWorker;
+    return [...newWorkers];
+  });
+};
+
+export const handleCompanyEdit = (
+  newCompany: Company,
+  setCompanies: Dispatch<SetStateAction<Company[]>>
+) => {
+  setCompanies((prevCompanies) => {
+    const index = prevCompanies.findIndex(
+      (company) => company.id === newCompany.id
+    );
+
+    return prevCompanies.splice(index, 1, newCompany);
+  });
 };

@@ -12,11 +12,13 @@ import Loading from '../layouts/Loading';
 import { Worker } from '../misc/types';
 import { useTranslation } from 'react-i18next';
 import { handleWorkerDelete } from '../misc/helpers';
+import WorkerModal from '../components/Modals/Worker';
 
 const Workers = (): React.JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [workers, setWorkers] = useState<Worker[]>([])
+  const [selectedWorkers, setSelectedWorkers] = useState<Worker | undefined>(undefined)
 
   const { t: translating } = useTranslation("global")
   const { showToast, setLayout, showWarning } = useAppContext();
@@ -28,7 +30,7 @@ const Workers = (): React.JSX.Element => {
         setWorkers((prevWorkers) => [...prevWorkers, ...newData]);
         setPage((prevPage) => prevPage + 1);
 
-        if (newData.length < 20) {
+        if (newData.length < 10) {
           setHasMore(false);
         }
       } else {
@@ -83,7 +85,18 @@ const Workers = (): React.JSX.Element => {
     <Page id='workers' className='d-flex flex-column align-items-start overflow-hidden'>
       <Header name={translating("workers.title")} />
 
-      <button className='m-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1'>{translating("workers.add")}</button>
+      <button
+        onClick={() => setSelectedWorkers({
+          id: -1,
+          fullName: "",
+          personal_id: "",
+          phone: "",
+          work_type: "",
+          password: ""
+        })}
+        className='m-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1'>
+        {translating("workers.add")}
+      </button>
 
       {!isLoading && workers.length === 0
         ? <h1 className='text-center text-secondary mt-2 w-100'>{translating("workers.empty")}</h1>
@@ -104,12 +117,28 @@ const Workers = (): React.JSX.Element => {
                     withWhatsApp
                     id={worker.id}
                     name={worker.fullName}
-                    phone={worker.phone} />
+                    phone={worker.phone}
+                    handleSelectRecord={() => {
+                      setSelectedWorkers({
+                        id: worker.id,
+                        fullName: worker.fullName,
+                        personal_id: worker.personal_id,
+                        phone: worker.phone,
+                        password: ""
+                      })
+                    }}
+                  />
                 </Col>
               ))}
             </Row>
           </InfiniteScroll>
         </Scroll >}
+
+      {selectedWorkers && <WorkerModal
+        worker={selectedWorkers}
+        onClose={() => setSelectedWorkers(undefined)}
+        setWorkers={setWorkers}
+      />}
     </Page >
   );
 };

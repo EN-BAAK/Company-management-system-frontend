@@ -17,7 +17,7 @@ const Input = ({ label, name, inputClassName, labelClassName, Icon, formGroupCla
 
       <div className='position-relative'>
         {Icon && React.cloneElement(Icon as React.ReactElement, { className: "position-absolute" })}
-        <Field className={`${inputClassName} form-control py-2`} name={name} {...reset} />
+        <Field className={`${inputClassName} form-control py-2 ${Icon && "with-icon"}`} name={name} {...reset} />
       </div>
 
       <ErrorMessage name={name}>
