@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Page from '../layouts/Page';
 import Header from '../layouts/Header';
-import { useQuery } from 'react-query';
-import { fetchCompanies } from '../api-client';
+import { useMutation, useQuery } from 'react-query';
+import { deleteCompany, fetchCompanies } from '../api-client';
 import { useAppContext } from '../context/AppProvider';
 import RecordCard from '../components/RecordCard';
 import { Col, Row } from 'react-bootstrap';
@@ -11,13 +11,14 @@ import Scroll from '../layouts/Scroll';
 import Loading from '../layouts/Loading';
 import { Company } from '../misc/types';
 import { useTranslation } from 'react-i18next';
+import { handleCompanyDelete } from '../misc/helpers';
 const Companies = (): React.JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [companies, setCompanies] = useState<Company[]>([])
 
   const { t: translating } = useTranslation("global")
-  const { showToast } = useAppContext();
+  const { showToast, setLayout, showWarning } = useAppContext();
   const { isLoading } = useQuery(["companies", page], () => fetchCompanies(page), {
     onSuccess: (fetchedData) => {
       const newData = fetchedData.companies;
@@ -40,6 +41,32 @@ const Companies = (): React.JSX.Element => {
     refetchOnWindowFocus: false,
     enabled: page === 1 || companies.length === 0
   });
+
+  const mutationDelete = useMutation(deleteCompany, {
+    onMutate: () => {
+      setLayout(true)
+    },
+    onSuccess: (data) => {
+      showToast({ message: translating("companies.delete.success"), type: "SUCCESS" })
+      handleCompanyDelete(data.id, companies, setCompanies)
+    },
+    onError: () => {
+      showToast({ message: translating("companies.delete.error"), type: "ERROR" })
+    },
+    onSettled: () => {
+      setLayout(false)
+    }
+  })
+
+
+  const handleDelete = (id: number, name: string) => {
+    showWarning({
+      message: `${translating("global.confirmDelete")} ${name}?`,
+      btn1: translating("global.cancel"),
+      btn2: translating("global.delete"),
+      handleBtn2: () => mutationDelete.mutate(id)
+    })
+  }
 
   const fetchMoreData = () => {
     if (hasMore && !isLoading) {
@@ -72,7 +99,11 @@ const Companies = (): React.JSX.Element => {
             <Row className='align-items-start justify-content-start g-2 py-2'>
               {companies.map(worker => (
                 <Col key={worker.id} xs={6} sm={6}>
-                  <RecordCard id={worker.id} name={worker.name} phone={worker.phone} />
+                  <RecordCard
+                    handleDelete={handleDelete}
+                    id={worker.id}
+                    name={worker.name}
+                    phone={worker.phone} />
                 </Col>
               ))}
             </Row>

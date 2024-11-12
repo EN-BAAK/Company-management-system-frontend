@@ -73,3 +73,29 @@ export const logout = async () => {
 
   return responseBody;
 };
+
+export const deleteWorker = async (id: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/user/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const deleteCompany = async (id: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/company/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};

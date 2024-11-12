@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
@@ -20,6 +22,7 @@ export type AppContext = {
   isLoggedIn: boolean;
   showToast: (toastMessage: ToastMessage) => void;
   showWarning: (warning: Warning) => void;
+  setLayout: Dispatch<SetStateAction<boolean>>;
 };
 
 export type FormikControl = {

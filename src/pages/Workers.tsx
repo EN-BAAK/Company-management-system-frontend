@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Page from '../layouts/Page';
 import Header from '../layouts/Header';
-import { useQuery } from 'react-query';
-import { fetchWorkers } from '../api-client';
+import { useMutation, useQuery } from 'react-query';
+import { deleteWorker, fetchWorkers } from '../api-client';
 import { useAppContext } from '../context/AppProvider';
 import RecordCard from '../components/RecordCard';
 import { Col, Row } from 'react-bootstrap';
@@ -11,6 +11,7 @@ import Scroll from '../layouts/Scroll';
 import Loading from '../layouts/Loading';
 import { Worker } from '../misc/types';
 import { useTranslation } from 'react-i18next';
+import { handleWorkerDelete } from '../misc/helpers';
 
 const Workers = (): React.JSX.Element => {
   const [page, setPage] = useState<number>(1);
@@ -18,7 +19,7 @@ const Workers = (): React.JSX.Element => {
   const [workers, setWorkers] = useState<Worker[]>([])
 
   const { t: translating } = useTranslation("global")
-  const { showToast } = useAppContext();
+  const { showToast, setLayout, showWarning } = useAppContext();
   const { isLoading } = useQuery(["workers", page], () => fetchWorkers(page), {
     onSuccess: (fetchedData) => {
       const newData = fetchedData.workers;
@@ -41,6 +42,31 @@ const Workers = (): React.JSX.Element => {
     refetchOnWindowFocus: false,
     enabled: page === 1 || workers.length === 0
   });
+
+  const mutationDelete = useMutation(deleteWorker, {
+    onMutate: () => {
+      setLayout(true)
+    },
+    onSuccess: (data) => {
+      showToast({ message: translating("workers.delete.success"), type: "SUCCESS" })
+      handleWorkerDelete(data.id, workers, setWorkers)
+    },
+    onError: () => {
+      showToast({ message: translating("workers.delete.error"), type: "ERROR" })
+    },
+    onSettled: () => {
+      setLayout(false)
+    }
+  })
+
+  const handleDelete = (id: number, name: string) => {
+    showWarning({
+      message: `${translating("global.confirmDelete")} ${name}?`,
+      btn1: translating("global.cancel"),
+      btn2: translating("global.delete"),
+      handleBtn2: () => mutationDelete.mutate(id)
+    })
+  }
 
   const fetchMoreData = () => {
     if (hasMore && !isLoading) {
@@ -72,8 +98,13 @@ const Workers = (): React.JSX.Element => {
           >
             <Row className='align-items-start justify-content-start g-2 py-2'>
               {workers.map(worker => (
-                <Col key={worker.id} xs={12} sm={6}>
-                  <RecordCard withWhatsApp id={worker.id} name={worker.fullName} phone={worker.phone} />
+                <Col key={`worker-${worker.id}`} xs={12} sm={6}>
+                  <RecordCard
+                    handleDelete={handleDelete}
+                    withWhatsApp
+                    id={worker.id}
+                    name={worker.fullName}
+                    phone={worker.phone} />
                 </Col>
               ))}
             </Row>

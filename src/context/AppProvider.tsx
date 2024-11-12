@@ -7,6 +7,7 @@ import {
 import Loading from '../layouts/Loading';
 import { validateToken } from '../api-client';
 import { Toast } from '../components/Toast';
+import Layout from "../layouts/Layout"
 import Warning from '../components/Warning';
 import { useQuery } from 'react-query';
 
@@ -19,6 +20,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const AppProvider = ({ children }: Props): React.JSX.Element => {
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
   const [warning, setWarning] = useState<WarningType | undefined>(undefined);
+  const [layout, setLayout] = useState<boolean>(false)
 
   const { isError, isLoading } = useQuery("validateToken", validateToken, {
     retry: false,
@@ -41,6 +43,7 @@ const AppProvider = ({ children }: Props): React.JSX.Element => {
         isLoggedIn: !isError,
         showToast,
         showWarning,
+        setLayout
       }}
     >
       {toast && (
@@ -61,6 +64,10 @@ const AppProvider = ({ children }: Props): React.JSX.Element => {
           onClose={() => setWarning(undefined)}
           handleBtn2={warning.handleBtn2}
         />
+      )}
+
+      {layout && (
+        <Layout />
       )}
 
       {children}
