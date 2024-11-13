@@ -25,22 +25,22 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
 
   const mutationCreate = useMutation(createShift, {
     onSuccess: (data) => {
-      showToast({ message: translating("companies.modal.create.success"), type: "SUCCESS" })
+      showToast({ message: translating("shifts.form.create.success"), type: "SUCCESS" })
       handleShiftCreate(data.shift, setShifts)
       onClose()
     },
     onError: () => {
-      showToast({ message: translating("companies.modal.create.error"), type: "ERROR" })
+      showToast({ message: translating("shifts.form.create.error"), type: "ERROR" })
     },
   })
   const mutationEdit = useMutation(editShift, {
     onSuccess: (data: { shift: ShiftType }) => {
-      showToast({ message: translating("companies.modal.edit.success"), type: "SUCCESS" })
+      showToast({ message: translating("shifts.form.edit.success"), type: "SUCCESS" })
       handleShiftEdit(data.shift, setShifts)
       onClose()
     },
     onError: () => {
-      showToast({ message: translating("companies.modal.edit.error"), type: "ERROR" })
+      showToast({ message: translating("shifts.form.edit.error"), type: "ERROR" })
     },
   })
 
@@ -81,7 +81,10 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
   return (
     <ModalCard
       onClose={onClose}
-      title={"Create"}
+      title={isEdit
+        ? translating("shifts.form.title.edit")
+        : translating("shifts.form.title.create")
+      }
       id='shift-modal-control'>
       <Formik
         initialValues={shift}
@@ -92,7 +95,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
             <FormikControl
               control='select'
               name='workerId'
-              placeholder='Worker Name'
+              placeholder={translating("shifts.form.fields.workerName")}
               options={workers.map(worker => {
                 return {
                   id: worker.id,
@@ -104,7 +107,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
             <FormikControl
               control='select'
               name='companyId'
-              placeholder='Company name'
+              placeholder={translating("shifts.form.fields.companyName")}
               options={companies.map(company => {
                 return {
                   id: company.id,
@@ -116,7 +119,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
             <FormikControl
               control='date'
               name='date'
-              label='date'
+              label={translating("shifts.form.fields.date")}
               type='text'
             />
 
@@ -124,20 +127,20 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
               <FormikControl
                 control='time'
                 name='startHour'
-                label='start'
+                label={translating("shifts.form.fields.start")}
               />
 
               <FormikControl
                 control='time'
                 name='endHour'
-                label='end'
+                label={translating("shifts.form.fields.end")}
               />
             </div>
 
             <FormikControl
               control='input'
               name='location'
-              label='location'
+              label={translating("shifts.form.fields.location")}
               type='text'
             />
 
@@ -145,13 +148,13 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
               control='input'
               name='workType'
               type='text'
-              label='work type'
+              label={translating("shifts.form.fields.workType")}
             />
 
             <FormikControl
               control='textarea'
               name='notes'
-              label="notes"
+              label={translating("shifts.form.fields.notes")}
               type='text'
             />
 

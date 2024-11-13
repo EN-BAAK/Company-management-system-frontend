@@ -95,11 +95,11 @@ const Shifts = (): React.JSX.Element => {
       setLayout(true)
     },
     onSuccess: (data) => {
-      showToast({ message: translating("companies.delete.success"), type: "SUCCESS" })
+      showToast({ message: translating("shifts.delete.success"), type: "SUCCESS" })
       handleShiftDelete(data.id, shifts, setShifts)
     },
     onError: () => {
-      showToast({ message: translating("companies.delete.error"), type: "ERROR" })
+      showToast({ message: translating("shifts.delete.error"), type: "ERROR" })
     },
     onSettled: () => {
       setLayout(false)
@@ -108,7 +108,7 @@ const Shifts = (): React.JSX.Element => {
 
   const handleDelete = (id: number, name: string) => {
     showWarning({
-      message: `${translating("global.confirmDelete")} ${name}?`,
+      message: `${translating("shifts.delete.confirm")} ${name}?`,
       btn1: translating("global.cancel"),
       btn2: translating("global.delete"),
       handleBtn2: () => mutationDelete.mutate(id)
@@ -128,7 +128,7 @@ const Shifts = (): React.JSX.Element => {
 
   return (
     <Page id='shifts'>
-      <div className='filters-holder mt-2 px-2 w-100 flex-center-y gap-3'>
+      <div className='filters-holder mt-4 px-2 w-100 flex-center-y gap-3'>
         <div className='w-100 position-relative'>
           <CiSearch
             size={30}
@@ -137,7 +137,7 @@ const Shifts = (): React.JSX.Element => {
             value={search}
             onChange={e => setSearch(e.target.value)}
             type='text'
-            placeholder='quick search'
+            placeholder={translating("shifts.search")}
             className='pe-5 py-2' />
         </div>
 
@@ -157,7 +157,8 @@ const Shifts = (): React.JSX.Element => {
           workerId: -1,
           workType: ""
         })}
-        className='mt-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1'>{translating("companies.add")}</button>
+        className='mt-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1'>
+        {translating("shifts.add")}</button>
 
       {!isLoadingShifts && shifts.length === 0
         ? <h1 className='text-center text-secondary mt-2 w-100'>{translating("workers.empty")}</h1>
