@@ -7,13 +7,15 @@ import { deleteShift, fetchCompaniesIdentity, fetchShifts, fetchWorkersIdentity 
 import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { CompanyIdentity, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
+import { CompanyIdentity, Filter as FilterType, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
 import ShiftCard from '../components/ShiftCard';
 import { handleShiftDelete, searchText } from '../misc/helpers';
 import { FormControl } from 'react-bootstrap';
 import { CiSearch } from "react-icons/ci";
 import { FiFilter } from "react-icons/fi";
 import ShiftController from '../components/Modals/shifts/Control';
+import Filter from '../components/Modals/shifts/Filter';
+import View from '../components/Modals/shifts/View';
 
 const Shifts = (): React.JSX.Element => {
   const [search, setSearch] = useState<string>("")
@@ -21,13 +23,16 @@ const Shifts = (): React.JSX.Element => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [shifts, setShifts] = useState<ShiftType[]>([])
   const [selectedShift, setSelectedShift] = useState<ShiftControl | undefined>(undefined)
+  const [viewedShift, setViewedShift] = useState<ShiftType | undefined>(undefined)
   const [companies, setCompanies] = useState<CompanyIdentity[]>([])
   const [workers, setWorkers] = useState<WorkerIdentity[]>([])
-
-  const [workerName, setWorkerName] = useState<string>("");
-  const [companyName, setCompanyName] = useState<string>("");
-  const [date1, setDate1] = useState<string>("");
-  const [date2, setDate2] = useState<string>("");
+  const [openedFilterModal, setOpenedFilterModal] = useState<boolean>(false)
+  const [filter, setFilter] = useState<FilterType>({
+    companyName: "",
+    workerName: "",
+    date1: "",
+    date2: ''
+  })
 
   const { t: translating } = useTranslation("global")
   const { showToast, setLayout, showWarning } = useAppContext();
@@ -40,8 +45,8 @@ const Shifts = (): React.JSX.Element => {
     (searchText(search, shift.company.name)))
 
   const { isLoading: isLoadingShifts } = useQuery(
-    ["shifts", page, workerName, companyName, date1, date2],
-    () => fetchShifts({ workerName, companyName, date1, date2, page }),
+    ["shifts", page, filter.workerName, filter.companyName, filter.date1, filter.date2],
+    () => fetchShifts({ ...filter, page }),
     {
       onSuccess: (fetchedData) => {
         const newShifts = fetchedData.shifts;
@@ -142,6 +147,7 @@ const Shifts = (): React.JSX.Element => {
         </div>
 
         <FiFilter
+          onClick={() => setOpenedFilterModal(true)}
           size={30}
         />
       </div>
@@ -192,6 +198,7 @@ const Shifts = (): React.JSX.Element => {
                       }
                     )
                   }}
+                  handleView={() => setViewedShift(shift)}
                 />
               ))}
             </div>
@@ -207,6 +214,21 @@ const Shifts = (): React.JSX.Element => {
           setShifts={setShifts}
         />
       }
+
+      {openedFilterModal &&
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+          workers={workers}
+          companies={companies}
+          onClose={() => setOpenedFilterModal(false)}
+        />}
+
+      {viewedShift &&
+        <View
+          onClose={() => setViewedShift(undefined)}
+          shift={viewedShift}
+        />}
 
     </Page>
   )

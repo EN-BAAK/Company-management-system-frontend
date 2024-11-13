@@ -12,10 +12,11 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 interface Props {
   shift: ShiftType,
   handleDelete: () => void,
-  handleEdit: () => void
+  handleEdit: () => void,
+  handleView: () => void
 }
 
-const ShiftCard = ({ shift, handleDelete, handleEdit }: Props): React.JSX.Element => {
+const ShiftCard = ({ shift, handleDelete, handleEdit, handleView }: Props): React.JSX.Element => {
   const maxTextLength = 10
   return (
     <Card className='overflow-hidden w-100'>
@@ -25,7 +26,9 @@ const ShiftCard = ({ shift, handleDelete, handleEdit }: Props): React.JSX.Elemen
           <CiEdit size={20}
             onClick={handleEdit}
           />
-          <AiOutlineInfoCircle size={20} />
+          <AiOutlineInfoCircle
+            onClick={handleView}
+            size={20} />
         </div>
 
         <p className='m-0'>{shift.date}</p>

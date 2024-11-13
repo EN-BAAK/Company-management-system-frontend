@@ -123,3 +123,10 @@ export type WorkerIdentity = {
   id: number;
   fullName: string;
 };
+
+export type Filter = {
+  workerName: string;
+  companyName: string;
+  date1: string;
+  date2: string;
+};

@@ -14,7 +14,7 @@
     .close-icon {
       @include same-scale(35px);
       border: 3px solid var(--c-main);
-      @include set-position(25px, auto, auto, 25px);
+      @include set-position(25px, 25px, auto, auto);
 
       svg {
         color: var(--c-main);
