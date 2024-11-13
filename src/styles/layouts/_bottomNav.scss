@@ -1,6 +1,16 @@
 #navbar {
   height: 10vh;
 
+  &::after {
+    content: "";
+    background-color: var(--c-white-main);
+    width: 2px;
+    position: absolute;
+    @include center-x;
+    top: 0;
+    bottom: 0;
+  }
+
   a {
     color: var(--c-black-main);
     svg {

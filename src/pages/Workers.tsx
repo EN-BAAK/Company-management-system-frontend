@@ -76,9 +76,7 @@ const Workers = (): React.JSX.Element => {
   };
 
   if (isLoading && workers.length === 0 && hasMore)
-    return <div className='flex-1 flex-center'>
-      <Loading />
-    </div>
+    return <Loading />
 
   return (
     <Page id='workers'>

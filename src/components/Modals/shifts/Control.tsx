@@ -162,7 +162,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
               type='submit'
               disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
             >
-              {translating("companies.modal.confirm")}
+              {translating("shifts.form.confirm")}
             </Button>
           </Form>
         )}

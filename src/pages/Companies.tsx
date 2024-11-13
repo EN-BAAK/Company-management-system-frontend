@@ -77,9 +77,7 @@ const Companies = (): React.JSX.Element => {
   };
 
   if (isLoading && companies.length === 0 && hasMore)
-    return <div className='flex-1 flex-center'>
-      <Loading />
-    </div>
+    return <Loading />
 
   return (
     <Page id='companies'>

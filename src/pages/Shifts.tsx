@@ -127,9 +127,7 @@ const Shifts = (): React.JSX.Element => {
   };
 
   if (isLoadingShifts && shifts.length === 0 && hasMore && isLoadingCompanies && isLoadingWorkers)
-    return <div className='flex-1 flex-center'>
-      <Loading />
-    </div>
+    return <Loading />
 
   return (
     <Page id='shifts'>

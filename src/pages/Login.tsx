@@ -44,7 +44,6 @@ const Login = (): React.JSX.Element => {
         initialValues={initialLoginValues}
         validationSchema={loginValidationSchema(
           translating("login.phone-number.error.required"),
-          translating("login.phone-number.error.pattern"),
           translating("login.password.error"))}
         onSubmit={onSubmit}
       >

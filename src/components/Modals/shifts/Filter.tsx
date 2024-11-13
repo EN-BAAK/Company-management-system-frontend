@@ -91,7 +91,7 @@ const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): Reac
                   type='submit'
                   disabled={!formik.isValid || formik.isSubmitting || !formik.dirty}
                 >
-                  {translating("companies.modal.confirm")}
+                  {translating("shifts.filter.confirm")}
                 </Button>
               </Col>
 
