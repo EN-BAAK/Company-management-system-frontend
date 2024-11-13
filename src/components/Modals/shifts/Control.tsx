@@ -8,7 +8,7 @@ import Button from '../../form/Button'
 import { useTranslation } from 'react-i18next'
 import { useAppContext } from '../../../context/AppProvider'
 import { createShift, editShift } from '../../../api-client'
-import { handleShiftCreate, handleShiftEdit } from '../../../misc/helpers'
+import { handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../../misc/helpers'
 
 interface Props {
   onClose: () => void,
@@ -26,7 +26,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
   const mutationCreate = useMutation(createShift, {
     onSuccess: (data) => {
       showToast({ message: translating("shifts.form.create.success"), type: "SUCCESS" })
-      handleShiftCreate(data.shift, setShifts)
+      handleCreateFunc<ShiftType>(data.shift, setShifts)
       onClose()
     },
     onError: () => {
@@ -36,7 +36,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
   const mutationEdit = useMutation(editShift, {
     onSuccess: (data: { shift: ShiftType }) => {
       showToast({ message: translating("shifts.form.edit.success"), type: "SUCCESS" })
-      handleShiftEdit(data.shift, setShifts)
+      handleEditFunc<ShiftType>(data.shift, setShifts)
       onClose()
     },
     onError: () => {
@@ -65,7 +65,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
       formData.append("startHour", data.startHour)
     if (data.endHour)
       formData.append("endHour", data.endHour)
-    if (data.workerId)
+    if (data.workerId > 0)
       formData.append("workerId", String(data.workerId))
     if (data.notes)
       formData.append("notes", data.notes)

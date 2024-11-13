@@ -8,7 +8,7 @@ import { createWorkerValidationSchema, editWorkerValidationSchema } from '../../
 import { useMutation } from 'react-query'
 import { createWorker, editWorker } from '../../api-client'
 import { useAppContext } from '../../context/AppProvider'
-import { handleWorkerCreate, handleWorkerEdit } from '../../misc/helpers'
+import { handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
 import ModalCard from './ModalCard'
 
 
@@ -26,7 +26,7 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
   const mutationCreate = useMutation(createWorker, {
     onSuccess: (data) => {
       showToast({ message: translating("workers.modal.create.success"), type: "SUCCESS" })
-      handleWorkerCreate(data.user, setWorkers)
+      handleCreateFunc<WorkerType>(data.user, setWorkers)
       onClose()
     },
     onError: () => {
@@ -36,7 +36,7 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
   const mutationEdit = useMutation(editWorker, {
     onSuccess: (data) => {
       showToast({ message: translating("workers.modal.edit.success"), type: "SUCCESS" })
-      handleWorkerEdit(data.user, setWorkers)
+      handleEditFunc<WorkerType>(data.user, setWorkers)
       onClose()
     },
     onError: () => {

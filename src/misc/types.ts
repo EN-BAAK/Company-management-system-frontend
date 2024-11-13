@@ -37,7 +37,7 @@ export type FormikControl = {
   labelClassName?: string;
   inputClassName?: string;
   Icon?: React.ReactNode;
-  options?: { id: number; value: string }[];
+  options?: { id: number | string; value: string }[];
 };
 
 export type LoginForm = {
@@ -129,4 +129,9 @@ export type Filter = {
   companyName: string;
   date1: string;
   date2: string;
+  page: number;
 };
+
+export interface Identifiable {
+  id: number;
+}

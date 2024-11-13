@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppContext } from '../../context/AppProvider'
 import { useMutation } from 'react-query'
 import { createCompany, editCompany } from '../../api-client'
-import { handleCompanyCreate, handleCompanyEdit } from '../../misc/helpers'
+import { handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
 import { Form, Formik, FormikHelpers } from 'formik'
 import FormikControl from '../form/FormikControl'
 import Button from '../form/Button'
@@ -25,7 +25,7 @@ const Company = ({ company, onClose, setCompanies }: Props): React.ReactNode => 
   const mutationCreate = useMutation(createCompany, {
     onSuccess: (data) => {
       showToast({ message: translating("companies.modal.create.success"), type: "SUCCESS" })
-      handleCompanyCreate(data.company, setCompanies)
+      handleCreateFunc<CompanyType>(data.company, setCompanies)
       onClose()
     },
     onError: () => {
@@ -35,7 +35,7 @@ const Company = ({ company, onClose, setCompanies }: Props): React.ReactNode => 
   const mutationEdit = useMutation(editCompany, {
     onSuccess: (data) => {
       showToast({ message: translating("companies.modal.edit.success"), type: "SUCCESS" })
-      handleCompanyEdit(data.company, setCompanies)
+      handleEditFunc<CompanyType>(data.company, setCompanies)
       onClose()
     },
     onError: () => {

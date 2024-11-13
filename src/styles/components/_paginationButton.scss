@@ -1,0 +1,7 @@
+.pagination-button {
+  color: var(--c-main);
+
+  &:disabled {
+    color: var(--c-gray-main);
+  }
+}

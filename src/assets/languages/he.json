@@ -2,7 +2,9 @@
   "global": {
     "cancel": "ביטול",
     "delete": "מחיקה",
-    "confirmDelete": "האם אתה בטוח שברצונך למחוק"
+    "confirmDelete": "האם אתה בטוח שברצונך למחוק",
+    "prev": "קודם",
+    "next": "הבא"
   },
   "login": {
     "phone-number": {

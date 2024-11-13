@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Company, Shift as ShiftType, Worker } from "./types";
+import { Identifiable } from "./types";
 
 export const searchText = (search: string, text: string): boolean => {
   const re = new RegExp("\\w*" + search + "\\w*", "ig");
@@ -10,89 +10,33 @@ export const formatText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
 
-export const handleWorkerDelete = (
+export const handleDelete = <T extends Identifiable>(
   id: number,
-  workers: Worker[],
-  setWorkers: Dispatch<SetStateAction<Worker[]>>
+  items: T[],
+  setItems: Dispatch<SetStateAction<T[]>>
 ) => {
-  const newWorkers = workers.filter((worker) => worker.id !== id);
-  setWorkers(newWorkers);
+  const newItems = items.filter((item) => item.id !== id);
+  setItems(newItems);
 };
 
-export const handleCompanyDelete = (
-  id: number,
-  company: Company[],
-  setCompany: Dispatch<SetStateAction<Company[]>>
+export const handleCreate = <T extends Identifiable>(
+  newItem: T,
+  setItems: Dispatch<SetStateAction<T[]>>
 ) => {
-  const newWorkers = company.filter((com) => com.id !== id);
-  setCompany(newWorkers);
+  setItems((prevItems) => [newItem, ...prevItems]);
 };
 
-export const handleShiftDelete = (
-  id: number,
-  shifts: ShiftType[],
-  setShifts: Dispatch<SetStateAction<ShiftType[]>>
+export const handleEdit = <T extends Identifiable>(
+  updatedItem: T,
+  setItems: Dispatch<SetStateAction<T[]>>
 ) => {
-  const newShifts = shifts.filter((shift) => shift.id !== id);
-  setShifts(newShifts);
-};
+  setItems((prevItems) => {
+    const index = prevItems.findIndex((item) => item.id === updatedItem.id);
+    if (index === -1) return prevItems;
 
-export const handleWorkerCreate = (
-  newWorker: Worker,
-  setWorkers: Dispatch<SetStateAction<Worker[]>>
-) => {
-  setWorkers((prevWorkers) => [newWorker, ...prevWorkers]);
-};
-
-export const handleCompanyCreate = (
-  newCompany: Company,
-  setCompanies: Dispatch<SetStateAction<Company[]>>
-) => {
-  setCompanies((prevCompanies) => [newCompany, ...prevCompanies]);
-};
-
-export const handleShiftCreate = (
-  newShift: ShiftType,
-  setShifts: Dispatch<SetStateAction<ShiftType[]>>
-) => {
-  setShifts((prevShift) => [newShift, ...prevShift]);
-};
-
-export const handleWorkerEdit = (
-  newWorker: Worker,
-  setWorkers: Dispatch<SetStateAction<Worker[]>>
-) => {
-  setWorkers((prevWorkers) => {
-    const index = prevWorkers.findIndex((worker) => worker.id === newWorker.id);
-    const newWorkers = prevWorkers;
-    newWorkers[index] = newWorker;
-    return [...newWorkers];
-  });
-};
-
-export const handleCompanyEdit = (
-  newCompany: Company,
-  setCompanies: Dispatch<SetStateAction<Company[]>>
-) => {
-  setCompanies((prevCompanies) => {
-    const index = prevCompanies.findIndex(
-      (company) => company.id === newCompany.id
-    );
-    const newCompanies = prevCompanies;
-    newCompanies[index] = newCompany;
-    return [...newCompanies];
-  });
-};
-
-export const handleShiftEdit = (
-  newShift: ShiftType,
-  setShifts: Dispatch<SetStateAction<ShiftType[]>>
-) => {
-  setShifts((prevShifts) => {
-    const index = prevShifts.findIndex((shift) => shift.id === newShift.id);
-    const newShifts = prevShifts;
-    newShifts[index] = newShift;
-    return [...newShifts];
+    const newItems = [...prevItems];
+    newItems[index] = updatedItem;
+    return newItems;
   });
 };
 

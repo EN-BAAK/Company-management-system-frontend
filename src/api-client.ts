@@ -35,9 +35,9 @@ export const login = async (formData: LoginForm) => {
   return responseBody;
 };
 
-export const fetchWorkers = async (page: number = 1) => {
+export const fetchWorkers = async (page: number = 1, limit: number = 25) => {
   const response = await fetch(
-    `${API_BASE_URL}/api/user?page=${page}&offset=10`,
+    `${API_BASE_URL}/api/user?page=${page}&limit=${limit}`,
     {
       method: "GET",
       credentials: "include",
@@ -51,9 +51,9 @@ export const fetchWorkers = async (page: number = 1) => {
   return responseBody;
 };
 
-export const fetchCompanies = async (page: number = 1) => {
+export const fetchCompanies = async (page: number = 1, limit = 15) => {
   const response = await fetch(
-    `${API_BASE_URL}/api/company?page=${page}&offset=20`,
+    `${API_BASE_URL}/api/company?page=${page}&limit=${limit}`,
     {
       method: "GET",
       credentials: "include",
@@ -209,13 +209,16 @@ export const editPhone = async (data: editPhoneAdmin) => {
   return responseBody;
 };
 
-export const fetchShifts = async (filters: {
-  workerName?: string;
-  companyName?: string;
-  date1?: string;
-  date2?: string;
-  page?: number;
-}) => {
+export const fetchShifts = async (
+  filters: {
+    workerName?: string;
+    companyName?: string;
+    date1?: string;
+    date2?: string;
+    page?: number;
+  },
+  limit: number
+) => {
   const queryParams = new URLSearchParams();
 
   if (filters.workerName) queryParams.append("workerName", filters.workerName);
@@ -224,6 +227,7 @@ export const fetchShifts = async (filters: {
   if (filters.date1) queryParams.append("date1", filters.date1);
   if (filters.date2) queryParams.append("date2", filters.date2);
   if (filters.page) queryParams.append("page", filters.page.toString());
+  if (limit) queryParams.append("limit", limit.toString());
 
   const url = `${API_BASE_URL}/api/shift?${queryParams.toString()}`;
 

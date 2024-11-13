@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import ModalCard from '../ModalCard'
-import { CompanyIdentity, Filter as FilterType, WorkerIdentity } from '../../../misc/types'
+import { CompanyIdentity, Filter as FilterType, Shift, WorkerIdentity } from '../../../misc/types'
 import { Form, Formik } from 'formik'
 import FormikControl from '../../form/FormikControl'
 import { useTranslation } from 'react-i18next'
@@ -12,15 +12,19 @@ interface Props {
   filter: FilterType,
   setFilter: Dispatch<SetStateAction<FilterType>>
   companies: CompanyIdentity[],
-  workers: WorkerIdentity[]
+  workers: WorkerIdentity[],
+  setHasMore: Dispatch<SetStateAction<boolean>>
+  setShifts: Dispatch<SetStateAction<Shift[]>>
 }
 
-const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): React.JSX.Element => {
+const Filter = ({ onClose, filter, setFilter, companies, workers, setHasMore, setShifts }: Props): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
 
   const onSubmit = (data: FilterType) => {
-    setFilter(data)
-    onClose()
+    setShifts([]);
+    setFilter({ ...data, page: 1 });
+    setHasMore(true);
+    onClose();
   }
 
   const resetFilter = () => {
@@ -28,9 +32,10 @@ const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): Reac
       companyName: "",
       date1: "",
       date2: "",
-      workerName: ""
+      workerName: "",
+      page: 1
     })
-
+    setHasMore(true)
     onClose()
   }
 
@@ -53,7 +58,7 @@ const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): Reac
               placeholder={translating("shifts.filter.workerName")}
               options={workers.map(worker => {
                 return {
-                  id: worker.id,
+                  id: `${worker.fullName}-${worker.id}`,
                   value: worker.fullName
                 }
               })}
@@ -65,7 +70,7 @@ const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): Reac
               placeholder={translating("shifts.filter.companyName")}
               options={companies.map(company => {
                 return {
-                  id: company.id,
+                  id: `${company.name}-${company.id}`,
                   value: company.name
                 }
               })}
