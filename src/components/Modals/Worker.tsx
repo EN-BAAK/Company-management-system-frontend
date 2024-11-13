@@ -101,14 +101,14 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
               control='input'
               name='phone'
               label={translating("workers.modal.form.phone.label")}
-              type='text'
+              type='number'
             />
 
             <FormikControl
               control='input'
               name='personal_id'
               label={translating("workers.modal.form.personal_id.label")}
-              type='text'
+              type='number'
             />
 
             <FormikControl

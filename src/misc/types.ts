@@ -6,7 +6,7 @@ export type ToastMessage = {
 };
 
 export type variant = "info" | "danger" | "warning" | "secondary";
-export type inputField = "input" | "textarea";
+export type inputField = "input" | "textarea" | "select" | "date" | "time";
 export type inputType = "text" | "number" | "password";
 export type role = "admin" | "worker";
 
@@ -37,6 +37,7 @@ export type FormikControl = {
   labelClassName?: string;
   inputClassName?: string;
   Icon?: React.ReactNode;
+  options?: { id: number; value: string }[];
 };
 
 export type LoginForm = {
@@ -80,4 +81,45 @@ export type Record = {
   id: number;
   name: string;
   phone: string;
+};
+
+export type Shift = {
+  id: number;
+  startHour: string | null;
+  endHour: string | null;
+  date: string;
+  location: string;
+  workType?: string;
+  worker?: {
+    phone: string;
+    id: number;
+    fullName: string;
+  };
+  company: {
+    id: number;
+    name: string;
+  };
+  notes?: string;
+};
+
+export type ShiftControl = {
+  id: number;
+  startHour: string | null;
+  endHour: string | null;
+  date: string;
+  location: string;
+  workType?: string;
+  workerId: number;
+  companyId: number;
+  notes?: string;
+};
+
+export type CompanyIdentity = {
+  id: number;
+  name: string;
+};
+
+export type WorkerIdentity = {
+  id: number;
+  fullName: string;
 };

@@ -17,7 +17,7 @@ const ModalCard = ({ onClose, title, ...props }: HTMLAttributes<HTMLDivElement> 
           <FaXmark size={20} />
         </button>
 
-        <Card.Body>
+        <Card.Body className='pt-5'>
           <Card.Title className='text-center fw-semibold'>{title}</Card.Title>
 
           {props.children}

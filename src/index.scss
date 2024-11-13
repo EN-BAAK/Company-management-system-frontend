@@ -8,16 +8,14 @@
 @import "./styles/screens/global-rule";
 
 /* Pages */
-// @import "./styles/screens/settings";
-// @import "./styles/screens/socialMedias";
-// @import "./styles/screens/createCustomer";
-// @import "./styles/screens/digitalCard";
-// @import "./styles/screens/customers";
+@import "./styles/screens/empty";
+@import "./styles/screens/shifts";
 
 // /* Layouts */
 @import "./styles/layouts/bottomNav";
 @import "./styles/layouts/header";
 @import "./styles/layouts/layout";
+@import "./styles/layouts/page";
 @import "./styles/layouts/page";
 
 // /* Components */
@@ -26,11 +24,3 @@
 @import "./styles/components/form/button";
 @import "./styles/components/form/fields";
 @import "./styles/components/modal/modalCard";
-// @import "./styles/components/addMediaModal";
-// @import "./styles/components/exitButton";
-// @import "./styles/components/linkBox";
-// @import "./styles/components/searchBar";
-
-// /* Templates */
-// @import "./styles/templates/template1";
-// @import "./styles/templates/template2";

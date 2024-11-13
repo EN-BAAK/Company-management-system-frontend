@@ -209,17 +209,99 @@ export const editPhone = async (data: editPhoneAdmin) => {
   return responseBody;
 };
 
-// export const editFullName = async (data: { fullName: string }) => {
-//   const response = await fetch(`${API_BASE_URL}/api/admin/edit/fullName`, {
-//     method: "PATCH",
-//     credentials: "include",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(data),
-//   });
+export const fetchShifts = async (filters: {
+  workerName?: string;
+  companyName?: string;
+  date1?: string;
+  date2?: string;
+  page?: number;
+}) => {
+  const queryParams = new URLSearchParams();
 
-//   const responseBody = await response.json();
+  if (filters.workerName) queryParams.append("workerName", filters.workerName);
+  if (filters.companyName)
+    queryParams.append("companyName", filters.companyName);
+  if (filters.date1) queryParams.append("date1", filters.date1);
+  if (filters.date2) queryParams.append("date2", filters.date2);
+  if (filters.page) queryParams.append("page", filters.page.toString());
 
-//   if (!response.ok) throw new Error(responseBody.message);
+  const url = `${API_BASE_URL}/api/shift?${queryParams.toString()}`;
 
-//   return responseBody;
-// };
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const deleteShift = async (id: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/shift/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const fetchCompaniesIdentity = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/company/identity`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const fetchWorkersIdentity = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/user/identity`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const createShift = async (formData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/shift`, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};
+
+export const editShift = async (data: { formData: FormData; id: number }) => {
+  const response = await fetch(`${API_BASE_URL}/api/shift/${data.id}`, {
+    method: "PUT",
+    credentials: "include",
+    body: data.formData,
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
+};

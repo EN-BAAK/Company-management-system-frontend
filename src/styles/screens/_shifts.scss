@@ -1,0 +1,8 @@
+#shifts {
+  .filters-holder {
+    .search {
+      @include center-y;
+      right: 0.75rem;
+    }
+  }
+}

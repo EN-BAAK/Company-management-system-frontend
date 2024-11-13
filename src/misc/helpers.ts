@@ -1,9 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
-import { Company, Worker } from "./types";
+import { Company, Shift as ShiftType, Worker } from "./types";
 
 export const searchText = (search: string, text: string): boolean => {
   const re = new RegExp("\\w*" + search + "\\w*", "ig");
   return re.test(text);
+};
+
+export const formatText = (text: string, maxLength: number): string => {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
 
 export const handleWorkerDelete = (
@@ -24,6 +28,15 @@ export const handleCompanyDelete = (
   setCompany(newWorkers);
 };
 
+export const handleShiftDelete = (
+  id: number,
+  shifts: ShiftType[],
+  setShifts: Dispatch<SetStateAction<ShiftType[]>>
+) => {
+  const newShifts = shifts.filter((shift) => shift.id !== id);
+  setShifts(newShifts);
+};
+
 export const handleWorkerCreate = (
   newWorker: Worker,
   setWorkers: Dispatch<SetStateAction<Worker[]>>
@@ -36,6 +49,13 @@ export const handleCompanyCreate = (
   setCompanies: Dispatch<SetStateAction<Company[]>>
 ) => {
   setCompanies((prevCompanies) => [newCompany, ...prevCompanies]);
+};
+
+export const handleShiftCreate = (
+  newShift: ShiftType,
+  setShifts: Dispatch<SetStateAction<ShiftType[]>>
+) => {
+  setShifts((prevShift) => [newShift, ...prevShift]);
 };
 
 export const handleWorkerEdit = (
@@ -62,4 +82,24 @@ export const handleCompanyEdit = (
     newCompanies[index] = newCompany;
     return [...newCompanies];
   });
+};
+
+export const handleShiftEdit = (
+  newShift: ShiftType,
+  setShifts: Dispatch<SetStateAction<ShiftType[]>>
+) => {
+  setShifts((prevShifts) => {
+    const index = prevShifts.findIndex((shift) => shift.id === newShift.id);
+    const newShifts = prevShifts;
+    newShifts[index] = newShift;
+    return [...newShifts];
+  });
+};
+
+export const handleWhatsAppClick = (phone: string | number) => {
+  window.open(`https://wa.me/+972${phone}`, "_blank");
+};
+
+export const handlePhoneClick = (phone: string | number) => {
+  window.open(`tel:+972${phone}`);
 };

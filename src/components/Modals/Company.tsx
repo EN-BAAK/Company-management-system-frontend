@@ -120,27 +120,6 @@ const Company = ({ company, onClose, setCompanies }: Props): React.ReactNode => 
       </Formik>
     </ModalCard>
   )
-
-  // return (
-  //   <div id='company-modal' className='position-fixed flex-center'>
-  //     <Card className='w-100 mx-2 shadow position-relative'>
-  //       <button
-  //         onClick={onClose}
-  //         className="close-icon bg-transparent position-absolute rounded-circle flex-center">
-  //         <FaX size={20} />
-  //       </button>
-
-  //       <Card.Body>
-  //         <Card.Title className='text-center fw-semibold'>
-  //           {isEdit
-  //             ? 
-  //             : 
-  //         </Card.Title>
-
-  //       </Card.Body>
-  //     </Card>
-  //   </div>
-  // )
 }
 
 

@@ -1,4 +1,8 @@
-import { editPasswordAdmin, editPhoneAdmin, LoginForm } from "./types";
+import {
+  editPasswordAdmin,
+  editPhoneAdmin,
+  LoginForm,
+} from "./types";
 import * as Yup from "yup";
 import { PiUsersThreeBold } from "react-icons/pi";
 import { FaRegBuilding } from "react-icons/fa";
