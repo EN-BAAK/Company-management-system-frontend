@@ -171,21 +171,30 @@ const Shifts = (): React.JSX.Element => {
         <FiFilter onClick={() => setOpenedFilterModal(true)} size={30} />
       </div>
 
-      <button
-        onClick={() => setSelectedShift({
-          companyId: -1,
-          date: "",
-          endHour: "",
-          startHour: "",
-          id: -1,
-          location: "",
-          workerId: -1,
-          workType: ""
-        })}
-        className="mt-2 border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1"
-      >
-        {translating("shifts.add")}
-      </button>
+      <div className="mt-2 flex-center-y justify-content-between w-100 px-2">
+        <button
+          onClick={() => setSelectedShift({
+            companyId: -1,
+            date: "",
+            endHour: "",
+            startHour: "",
+            id: -1,
+            location: "",
+            workerId: -1,
+            workType: ""
+          })}
+          className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1"
+        >
+          {translating("shifts.add")}
+        </button>
+
+        {filter.workerName &&
+          <button
+            className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1"
+          >
+            {translating("shifts.add")}
+          </button>}
+      </div>
 
       {!isLoadingShifts && shifts.length === 0 ? (
         <h1 className="text-center text-secondary mt-2 w-100">{translating("workers.empty")}</h1>

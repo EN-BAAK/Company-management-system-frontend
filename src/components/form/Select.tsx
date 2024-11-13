@@ -25,7 +25,7 @@ const Select = ({ label, placeholder, options, name, inputClassName, labelClassN
           {options && options.length > 0 && options.map(option =>
             <option
               key={`options-${name}-${option.id}`}
-              value={option.id}
+              value={option.key}
             >
               {option.value}
             </option>

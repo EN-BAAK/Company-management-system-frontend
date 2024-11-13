@@ -59,6 +59,7 @@ const Filter = ({ onClose, filter, setFilter, companies, workers, setHasMore, se
               options={workers.map(worker => {
                 return {
                   id: `${worker.fullName}-${worker.id}`,
+                  key: worker.fullName,
                   value: worker.fullName
                 }
               })}
@@ -71,6 +72,7 @@ const Filter = ({ onClose, filter, setFilter, companies, workers, setHasMore, se
               options={companies.map(company => {
                 return {
                   id: `${company.name}-${company.id}`,
+                  key: company.name,
                   value: company.name
                 }
               })}

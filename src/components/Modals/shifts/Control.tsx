@@ -99,6 +99,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
               options={workers.map(worker => {
                 return {
                   id: worker.id,
+                  key: worker.id,
                   value: worker.fullName
                 }
               })}
@@ -111,6 +112,7 @@ const Control = ({ onClose, shift, companies, workers, setShifts }: Props): Reac
               options={companies.map(company => {
                 return {
                   id: company.id,
+                  key: company.id,
                   value: company.name
                 }
               })}
