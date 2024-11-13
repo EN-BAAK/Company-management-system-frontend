@@ -8,6 +8,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { formatText, handlePhoneClick, handleWhatsAppClick } from '../misc/helpers';
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import Clock from './Clock';
 
 interface Props {
   shift: ShiftType,
@@ -72,6 +73,14 @@ const ShiftCard = ({ shift, handleDelete, handleEdit, handleView }: Props): Reac
           <FaLocationDot size={20} />
           <p className='m-0'>{formatText(shift.location, maxTextLength)}</p>
         </Col>
+
+        {(shift.startHour || shift.endHour) && (
+          <Col sm={12}>
+            <Clock startHour={shift.startHour || undefined} endHour={shift.endHour || undefined} />
+          </Col>
+        )}
+
+
       </Card.Body>
     </Card>
   )

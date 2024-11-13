@@ -6,6 +6,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { handlePhoneClick, handleWhatsAppClick } from '../../../misc/helpers';
 import { useTranslation } from 'react-i18next';
+import Clock from '../../Clock';
 
 interface Props {
   shift: ShiftType,
@@ -44,6 +45,10 @@ const View = ({ shift, onClose }: Props): React.JSX.Element => {
           <p className='m-0'>{shift.location}</p>
 
         </Card.Body>
+
+        <Card.Footer>
+          <Clock startHour={shift.startHour || undefined} endHour={shift.endHour || undefined} />
+        </Card.Footer>
       </Card>
     </ModalCard>
   )
