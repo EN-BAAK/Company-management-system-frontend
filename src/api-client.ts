@@ -309,3 +309,30 @@ export const editShift = async (data: { formData: FormData; id: number }) => {
 
   return responseBody;
 };
+
+export const downloadShiftsReport = async (workerName: string) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/report?workerName=${encodeURIComponent(workerName)}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Failed to download the PDF report");
+    }
+
+    const blob = await response.blob();
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${workerName}_shifts_report.pdf`;
+    link.click();
+    URL.revokeObjectURL(link.href); // Clean up immediately
+    console.log("Download succeeded");
+  } catch (error) {
+    console.error("Download failed:", error);
+  }
+};

@@ -3,7 +3,7 @@ import Page from '../layouts/Page';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../context/AppProvider';
 import { useMutation, useQuery } from 'react-query';
-import { deleteShift, fetchCompaniesIdentity, fetchShifts, fetchWorkersIdentity } from '../api-client';
+import { deleteShift, downloadShiftsReport, fetchCompaniesIdentity, fetchShifts, fetchWorkersIdentity } from '../api-client';
 import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { CompanyIdentity, Filter as FilterType, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
@@ -16,6 +16,7 @@ import ShiftController from '../components/Modals/shifts/Control';
 import Filter from '../components/Modals/shifts/Filter';
 import View from '../components/Modals/shifts/View';
 import PaginationButton from '../components/PaginationButton';
+import { MdOutlineFileDownload } from "react-icons/md";
 
 const Shifts = (): React.JSX.Element => {
   const [search, setSearch] = useState<string>("");
@@ -120,6 +121,21 @@ const Shifts = (): React.JSX.Element => {
     }
   });
 
+  const mutationDownload = useMutation(downloadShiftsReport, {
+    onMutate: () => {
+      setLayout(true)
+    },
+    onSuccess: () => {
+      showToast({ message: translating("shifts.download.success"), type: "SUCCESS" });
+    },
+    onError: () => {
+      showToast({ message: translating("shifts.download.error"), type: "SUCCESS" });
+    },
+    onSettled: () => {
+      setLayout(false)
+    }
+  })
+
   const handleDelete = (id: number, name: string) => {
     showWarning({
       message: `${translating("shifts.delete.confirm")} ${name}?`,
@@ -190,9 +206,12 @@ const Shifts = (): React.JSX.Element => {
 
         {filter.workerName &&
           <button
-            className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1"
+            onClick={async () => await mutationDownload.mutateAsync(filter.workerName)}
+            className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1 flex-center-y gap-2"
           >
-            {translating("shifts.add")}
+            <MdOutlineFileDownload
+              size={20} />
+            {translating("shifts.download.button")}
           </button>}
       </div>
 
