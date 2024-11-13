@@ -11,7 +11,7 @@ import Shifts from "./pages/Shifts"
 import EmptyPage from "./pages/EmptyPage"
 
 const App = (): React.JSX.Element => {
-  const { isLoggedIn } = useAppContext()
+  const { isLoggedIn, user } = useAppContext()
 
   return (
     <main id="App" className="d-flex flex-column">
@@ -19,10 +19,14 @@ const App = (): React.JSX.Element => {
         <Routes>
           {isLoggedIn ?
             <React.Fragment>
-              <Route path="/settings" element={<SettingsNav />} />
-              <Route path="/settings/workers" element={<Workers />} />
-              <Route path="/settings/companies" element={<Companies />} />
-              <Route path="/settings/admin" element={<AdminSettings />} />
+              {user.role === "admin" && (
+                <React.Fragment>
+                  <Route path="/settings" element={<SettingsNav />} />
+                  <Route path="/settings/workers" element={<Workers />} />
+                  <Route path="/settings/companies" element={<Companies />} />
+                  <Route path="/settings/admin" element={<AdminSettings />} />
+                </React.Fragment>
+              )}
               <Route path="/" element={<Shifts />} />
               <Route path="*" element={<EmptyPage />} />
             </React.Fragment>
@@ -32,7 +36,7 @@ const App = (): React.JSX.Element => {
             </React.Fragment>
           }
         </Routes>
-        {isLoggedIn && <BottomNav />}
+        {isLoggedIn && user.role === "admin" && <BottomNav />}
       </Router>
     </main>
   )

@@ -1,4 +1,7 @@
 .page {
-  height: 90vh;
-  max-height: 90vh;
+  max-height: 99vh;
+  &.admin {
+    height: 90vh;
+    max-height: 90vh;
+  }
 }

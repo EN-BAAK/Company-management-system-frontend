@@ -1,20 +1,20 @@
 import React from 'react'
 
 interface Props {
-  title: string,
+  children: React.ReactNode,
   disabled: boolean,
   onClick: () => void
 }
 
-const PaginationButton = ({ title, disabled, onClick }: Props): React.ReactNode => {
+const PaginationControlButton = ({ children, disabled, onClick }: Props): React.ReactNode => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className='pagination-button border-0 fs-3 bg-transparent fw-bold text-decoration-underline'>
-      {title}
+      {children}
     </button>
   )
 }
 
-export default PaginationButton
+export default PaginationControlButton

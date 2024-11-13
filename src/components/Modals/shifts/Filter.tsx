@@ -13,29 +13,26 @@ interface Props {
   setFilter: Dispatch<SetStateAction<FilterType>>
   companies: CompanyIdentity[],
   workers: WorkerIdentity[],
-  setHasMore: Dispatch<SetStateAction<boolean>>
   setShifts: Dispatch<SetStateAction<Shift[]>>
 }
 
-const Filter = ({ onClose, filter, setFilter, companies, workers, setHasMore, setShifts }: Props): React.JSX.Element => {
+const Filter = ({ onClose, filter, setFilter, companies, workers, setShifts }: Props): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
 
   const onSubmit = (data: FilterType) => {
     setShifts([]);
-    setFilter({ ...data, page: 1 });
-    setHasMore(true);
+    setFilter({ ...data, });
     onClose();
   }
 
   const resetFilter = () => {
-    setFilter({
+    setFilter(prevFilter => ({
+      ...prevFilter,
+      workerName: "",
       companyName: "",
       date1: "",
-      date2: "",
-      workerName: "",
-      page: 1
-    })
-    setHasMore(true)
+      date2: ""
+    }))
     onClose()
   }
 

@@ -13,15 +13,20 @@ export const formatText = (text: string, maxLength: number): string => {
 export const handleDelete = <T extends Identifiable>(
   id: number,
   items: T[],
-  setItems: Dispatch<SetStateAction<T[]>>
+  setItems: Dispatch<SetStateAction<T[]>>,
+  currentPage: number = 1,
+  setCurrentPage: Dispatch<SetStateAction<number>>
 ) => {
   const newItems = items.filter((item) => item.id !== id);
   setItems(newItems);
+  if (newItems.length <= 0 && currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
 };
 
 export const handleCreate = <T extends Identifiable>(
   newItem: T,
-  setItems: Dispatch<SetStateAction<T[]>>
+  setItems: Dispatch<SetStateAction<T[]>>,
 ) => {
   setItems((prevItems) => [newItem, ...prevItems]);
 };

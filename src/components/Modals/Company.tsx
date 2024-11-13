@@ -14,10 +14,10 @@ import ModalCard from './ModalCard'
 interface Props {
   company: CompanyType,
   onClose: () => void,
-  setCompanies: Dispatch<SetStateAction<CompanyType[]>>
+  setCompanies: Dispatch<SetStateAction<CompanyType[]>>,
 }
 
-const Company = ({ company, onClose, setCompanies }: Props): React.ReactNode => {
+const Company = ({ company, onClose, setCompanies, }: Props): React.ReactNode => {
   const isEdit = company.id !== -1
 
   const { t: translating } = useTranslation("global")

@@ -2,6 +2,7 @@ import {
   Company,
   editPasswordAdmin,
   editPhoneAdmin,
+  Filter as FilterType,
   LoginForm,
   Worker,
 } from "./misc/types";
@@ -51,7 +52,7 @@ export const fetchWorkers = async (page: number = 1, limit: number = 25) => {
   return responseBody;
 };
 
-export const fetchCompanies = async (page: number = 1, limit = 15) => {
+export const fetchCompanies = async (page: number = 1, limit: number = 25) => {
   const response = await fetch(
     `${API_BASE_URL}/api/company?page=${page}&limit=${limit}`,
     {
@@ -209,16 +210,7 @@ export const editPhone = async (data: editPhoneAdmin) => {
   return responseBody;
 };
 
-export const fetchShifts = async (
-  filters: {
-    workerName?: string;
-    companyName?: string;
-    date1?: string;
-    date2?: string;
-    page?: number;
-  },
-  limit: number
-) => {
+export const fetchShifts = async (filters: FilterType, page: number) => {
   const queryParams = new URLSearchParams();
 
   if (filters.workerName) queryParams.append("workerName", filters.workerName);
@@ -226,8 +218,8 @@ export const fetchShifts = async (
     queryParams.append("companyName", filters.companyName);
   if (filters.date1) queryParams.append("date1", filters.date1);
   if (filters.date2) queryParams.append("date2", filters.date2);
-  if (filters.page) queryParams.append("page", filters.page.toString());
-  if (limit) queryParams.append("limit", limit.toString());
+  queryParams.append("page", page.toString());
+  if (filters.limit) queryParams.append("limit", filters.limit.toString());
 
   const url = `${API_BASE_URL}/api/shift?${queryParams.toString()}`;
 
@@ -330,9 +322,29 @@ export const downloadShiftsReport = async (workerName: string) => {
     link.href = URL.createObjectURL(blob);
     link.download = `${workerName}_shifts_report.pdf`;
     link.click();
-    URL.revokeObjectURL(link.href); // Clean up immediately
+    URL.revokeObjectURL(link.href);
     console.log("Download succeeded");
   } catch (error) {
     console.error("Download failed:", error);
   }
+};
+
+export const fetchShiftsForWorker = async (
+  workerId: number,
+  limit: number,
+  page: number
+) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/shift/${workerId}?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+
+  const responseBody = await response.json();
+
+  if (!response.ok) throw new Error(responseBody.message);
+
+  return responseBody;
 };

@@ -129,7 +129,7 @@ export type Filter = {
   companyName: string;
   date1: string;
   date2: string;
-  page: number;
+  limit: number;
 };
 
 export interface Identifiable {

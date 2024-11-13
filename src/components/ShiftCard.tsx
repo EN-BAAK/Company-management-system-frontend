@@ -9,6 +9,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { formatText, handlePhoneClick, handleWhatsAppClick } from '../misc/helpers';
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Clock from './Clock';
+import { useAppContext } from '../context/AppProvider';
 
 interface Props {
   shift: ShiftType,
@@ -18,12 +19,15 @@ interface Props {
 }
 
 const ShiftCard = ({ shift, handleDelete, handleEdit, handleView }: Props): React.JSX.Element => {
+  const { user } = useAppContext()
+
   const maxTextLength = 10
+
   return (
     <Card className='overflow-hidden w-100'>
       <Card.Header className='flex-center-y justify-content-between'>
         <div className='flex-center-y justify-content-between gap-3'>
-          <GoTrash onClick={() => handleDelete()} size={20} />
+          {user.role === "admin" && <GoTrash onClick={() => handleDelete()} size={20} />}
           <CiEdit size={20}
             onClick={handleEdit}
           />
