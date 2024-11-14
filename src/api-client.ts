@@ -318,33 +318,13 @@ export const downloadShiftsReport = async (workerName: string) => {
     }
 
     const blob = await response.blob();
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `${workerName}_shifts_report.pdf`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-    console.log("Download succeeded");
+    const pdfUrl = URL.createObjectURL(blob);
+
+    window.open(pdfUrl, "_blank");
+
+    setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
+    console.log("Opened PDF in a new tab");
   } catch (error) {
     console.error("Download failed:", error);
   }
-};
-
-export const fetchShiftsForWorker = async (
-  workerId: number,
-  limit: number,
-  page: number
-) => {
-  const response = await fetch(
-    `${API_BASE_URL}/api/shift/${workerId}?page=${page}&limit=${limit}`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
-
-  const responseBody = await response.json();
-
-  if (!response.ok) throw new Error(responseBody.message);
-
-  return responseBody;
 };
