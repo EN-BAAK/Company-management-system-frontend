@@ -4,5 +4,10 @@
       @include center-y;
       right: 0.75rem;
     }
+
+    .filter-flag {
+      @include same-scale(12px);
+      @include set-position(-1px, -1px, auto, auto);
+    }
   }
 }

@@ -8,7 +8,7 @@ import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { CompanyIdentity, Filter as FilterType, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
 import ShiftCard from '../components/ShiftCard';
-import { handleDelete as handleDeleteFunc, searchText } from '../misc/helpers';
+import { formatMobileNumber, handleDelete as handleDeleteFunc, searchText } from '../misc/helpers';
 import { FormControl } from 'react-bootstrap';
 import { CiSearch } from "react-icons/ci";
 import { FiFilter } from "react-icons/fi";
@@ -47,7 +47,7 @@ const Shifts = (): React.JSX.Element => {
 
   const quickFilteredShifts = shifts.filter(shift =>
     (shift.worker?.fullName && searchText(search, shift.worker.fullName)) ||
-    (shift.worker?.phone && searchText(search, shift.worker.phone)) ||
+    (shift.worker?.phone && searchText(search, formatMobileNumber(shift.worker.phone))) ||
     (shift.workType && searchText(search, shift.workType)) ||
     (searchText(search, shift.location)) ||
     (searchText(search, shift.company.name))
@@ -68,19 +68,6 @@ const Shifts = (): React.JSX.Element => {
       refetchOnWindowFocus: false,
     }
   );
-
-  // const { isLoading } = useQuery("worker-shifts", () => fetchShiftsForWorker(user.id, filter.limit, page), {
-  //   onSuccess: (fetchedData) => {
-  //     setShifts(fetchedData.shifts)
-  //     setTotalPages(fetchedData.totalPages)
-  //   },
-  //   onError: () => {
-  //     showToast({ message: "Something went wrong", type: "ERROR" });
-  //   },
-  //   retry: false,
-  //   refetchOnWindowFocus: false,
-  //   enabled: user.role === "admin"
-  // })
 
   const { isLoading: isLoadingCompanies } = useQuery(
     "companiesIdentity",
@@ -175,7 +162,10 @@ const Shifts = (): React.JSX.Element => {
         </div>
 
         {user.role === "admin"
-          ? <FiFilter onClick={() => setOpenedFilterModal(true)} size={30} />
+          ? <div className='position-relative'>
+            <FiFilter onClick={() => setOpenedFilterModal(true)} size={30} />
+            {(filter.companyName || filter.date1 || filter.date2 || filter.workerName) && <div className='filter-flag bg-danger position-absolute rounded-circle' />}
+          </div>
           : <MdOutlineLogout onClick={() => mutationLogout.mutate()} size={30} />
         }
       </div>

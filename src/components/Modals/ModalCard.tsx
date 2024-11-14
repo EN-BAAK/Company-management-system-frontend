@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react'
 import { Card } from 'react-bootstrap'
-import { FaXmark } from "react-icons/fa6";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 interface Props {
   onClose: () => void,
@@ -11,14 +11,17 @@ const ModalCard = ({ onClose, title, ...props }: HTMLAttributes<HTMLDivElement> 
   return (
     <div className='modal-card position-fixed flex-center'>
       <Card className='w-100 mx-2 shadow position-relative'>
-        <button
-          onClick={onClose}
-          className="close-icon bg-transparent position-absolute rounded-circle flex-center">
-          <FaXmark size={20} />
-        </button>
+        <Card.Header className='flex-center-y bg-white border-0 justify-content-between pt-4'>
+          <button
+            onClick={onClose}
+            className="close-icon bg-transparent rounded-circle flex-center">
+            <HiOutlineXMark size={20} />
+          </button>
 
-        <Card.Body className='pt-5'>
           <Card.Title className='text-center fw-semibold'>{title}</Card.Title>
+        </Card.Header>
+
+        <Card.Body className=''>
 
           {props.children}
         </Card.Body>

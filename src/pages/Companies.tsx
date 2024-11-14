@@ -9,7 +9,7 @@ import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { Company } from '../misc/types';
 import { useTranslation } from 'react-i18next';
-import { handleDelete as handleDeleteFunc } from '../misc/helpers';
+import { formatMobileNumber, handleDelete as handleDeleteFunc } from '../misc/helpers';
 import CompanyModal from '../components/Modals/Company';
 import PaginationButtons from '../components/PaginationButtons';
 
@@ -94,11 +94,11 @@ const Companies = (): React.JSX.Element => {
                   handleDelete={handleDelete}
                   id={company.id}
                   name={company.name}
-                  phone={company.phone}
+                  phone={formatMobileNumber(company.phone)}
                   handleSelectRecord={() => setSelectedCompany({
                     id: company.id,
                     name: company.name,
-                    phone: company.phone,
+                    phone: formatMobileNumber(company.phone),
                     notes: company.notes || ""
                   })}
                 />

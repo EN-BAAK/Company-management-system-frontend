@@ -8,7 +8,7 @@ import { createWorkerValidationSchema, editWorkerValidationSchema } from '../../
 import { useMutation } from 'react-query'
 import { createWorker, editWorker } from '../../api-client'
 import { useAppContext } from '../../context/AppProvider'
-import { handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
+import { formatMobileNumber, handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
 import ModalCard from './ModalCard'
 
 
@@ -45,7 +45,14 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
   })
 
   const onCreate = async (data: WorkerType) => {
-    await mutationCreate.mutateAsync(data)
+    await mutationCreate.mutateAsync({
+      id: data.id,
+      fullName: data.fullName,
+      personal_id: data.personal_id,
+      phone: formatMobileNumber(data.phone),
+      notes: data.notes,
+      password: data.password
+    })
   }
 
   const onEdit = async (data: WorkerType) => {
@@ -53,7 +60,7 @@ const Worker = ({ worker, setWorkers, onClose }: Props): React.ReactNode => {
     if (data.fullName)
       formData.append("fullName", data.fullName)
     if (data.phone)
-      formData.append("phone", String(data.phone))
+      formData.append("phone", formatMobileNumber(data.phone))
     if (data.personal_id)
       formData.append("personal_id", String(data.personal_id))
     if (data.password)

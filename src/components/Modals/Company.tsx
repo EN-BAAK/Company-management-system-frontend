@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppContext } from '../../context/AppProvider'
 import { useMutation } from 'react-query'
 import { createCompany, editCompany } from '../../api-client'
-import { handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
+import { formatMobileNumber, handleCreate as handleCreateFunc, handleEdit as handleEditFunc } from '../../misc/helpers'
 import { Form, Formik, FormikHelpers } from 'formik'
 import FormikControl from '../form/FormikControl'
 import Button from '../form/Button'
@@ -44,7 +44,12 @@ const Company = ({ company, onClose, setCompanies, }: Props): React.ReactNode =>
   })
 
   const onCreate = async (data: CompanyType) => {
-    await mutationCreate.mutateAsync(data)
+    await mutationCreate.mutateAsync({
+      id: data.id,
+      name: data.name,
+      phone: formatMobileNumber(data.phone),
+      notes: data.notes
+    })
   }
 
   const onEdit = async (data: CompanyType) => {
@@ -53,7 +58,7 @@ const Company = ({ company, onClose, setCompanies, }: Props): React.ReactNode =>
     if (data.name)
       formData.append("name", data.name)
     if (data.phone)
-      formData.append("phone", data.phone)
+      formData.append("phone", formatMobileNumber(data.phone))
     if (data.notes)
       formData.append("notes", data.notes)
 

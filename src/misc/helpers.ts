@@ -26,7 +26,7 @@ export const handleDelete = <T extends Identifiable>(
 
 export const handleCreate = <T extends Identifiable>(
   newItem: T,
-  setItems: Dispatch<SetStateAction<T[]>>,
+  setItems: Dispatch<SetStateAction<T[]>>
 ) => {
   setItems((prevItems) => [newItem, ...prevItems]);
 };
@@ -46,11 +46,42 @@ export const handleEdit = <T extends Identifiable>(
 };
 
 export const handleWhatsAppClick = (phone: string | number) => {
-  window.open(`https://wa.me/+972${phone}`, "_blank");
+  let phoneStr = phone.toString();
+
+  if (phoneStr.startsWith("0")) {
+    phoneStr = phoneStr.slice(1);
+  }
+
+  const whatsappLink = `https://wa.me/972${phoneStr}`;
+
+  const anchor = document.createElement("a");
+  anchor.href = whatsappLink;
+  anchor.target = "_self";
+
+  document.body.appendChild(anchor);
+
+  anchor.click();
+
+  document.body.removeChild(anchor);
 };
 
 export const handlePhoneClick = (phone: string | number) => {
-  window.open(`tel:+972${phone}`);
+  let phoneStr = phone.toString();
+
+  if (phoneStr.startsWith("0")) {
+    phoneStr = phoneStr.slice(1);
+  }
+
+  const telLink = `tel:+972${phoneStr}`;
+
+  const anchor = document.createElement("a");
+  anchor.href = telLink;
+
+  document.body.appendChild(anchor);
+
+  anchor.click();
+
+  document.body.removeChild(anchor);
 };
 
 export const calculateTimeDifference = (
@@ -73,4 +104,14 @@ export const calculateTimeDifference = (
   const diffM = diffMinutes % 60;
 
   return `${String(diffH).padStart(2, "0")}:${String(diffM).padStart(2, "0")}`;
+};
+
+export const formatMobileNumber = (number: string | number): string => {
+  const numStr = number.toString();
+
+  if (numStr.startsWith("0")) {
+    return numStr;
+  } else {
+    return "0" + numStr;
+  }
 };

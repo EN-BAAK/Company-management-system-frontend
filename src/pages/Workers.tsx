@@ -9,7 +9,7 @@ import Scroll from '../layouts/Scroll';
 import Loading from '../layouts/Loading';
 import { Worker } from '../misc/types';
 import { useTranslation } from 'react-i18next';
-import { handleDelete as handleDeleteFunc } from '../misc/helpers';
+import { formatMobileNumber, handleDelete as handleDeleteFunc } from '../misc/helpers';
 import WorkerModal from '../components/Modals/Worker';
 import PaginationButtons from '../components/PaginationButtons';
 
@@ -22,7 +22,7 @@ const Workers = (): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
   const { showToast, setLayout, showWarning } = useAppContext();
 
-  const maxWorkersPerPage = 4;
+  const maxWorkersPerPage = 25;
 
   const { isLoading } = useQuery(["workers", page],
     () => fetchWorkers(page, maxWorkersPerPage),
@@ -100,7 +100,7 @@ const Workers = (): React.JSX.Element => {
                       id: worker.id,
                       fullName: worker.fullName,
                       personal_id: worker.personal_id,
-                      phone: worker.phone,
+                      phone: formatMobileNumber(worker.phone),
                       password: "",
                       notes: worker.notes || ""
                     })

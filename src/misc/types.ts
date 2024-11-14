@@ -37,6 +37,7 @@ export type FormikControl = {
   labelClassName?: string;
   inputClassName?: string;
   Icon?: React.ReactNode;
+  pattern?: string;
   options?: { id: number | string; value: string; key: number | string }[];
 };
 
