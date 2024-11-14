@@ -104,7 +104,7 @@ const Company = ({ company, onClose, setCompanies, }: Props): React.ReactNode =>
               control='input'
               name='phone'
               label={translating("companies.modal.form.phone.label")}
-              type='number'
+              type='text'
             />
 
             <FormikControl

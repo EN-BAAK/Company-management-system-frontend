@@ -18,17 +18,17 @@ export default defineConfig({
         theme_color: "#ffffff", // The background color for the splash screen
         icons: [
           {
-            src: "/icons/icon-192x192.png",
+            src: "./src/assets/icons/icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/icons/icon-512x512.png",
+            src: "./src/assets/icons/icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "/icons/icon-1024x1024.png",
+            src: "./src/assets/icons/icon-1024x1024.png",
             sizes: "1024x1024",
             type: "image/png",
           },

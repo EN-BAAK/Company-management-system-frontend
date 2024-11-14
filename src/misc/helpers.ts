@@ -107,11 +107,5 @@ export const calculateTimeDifference = (
 };
 
 export const formatMobileNumber = (number: string | number): string => {
-  const numStr = number.toString();
-
-  if (numStr.startsWith("0")) {
-    return numStr;
-  } else {
-    return "0" + numStr;
-  }
+  return number.toString();
 };

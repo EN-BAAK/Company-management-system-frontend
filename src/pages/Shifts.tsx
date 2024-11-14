@@ -53,7 +53,7 @@ const Shifts = (): React.JSX.Element => {
     (searchText(search, shift.company.name))
   );
 
-  const { isLoading } = useQuery(
+  const { isLoading, isRefetching } = useQuery(
     ["shifts", page, filter.workerName, filter.companyName, filter.date1, filter.date2],
     () => fetchShifts(filter, page),
     {
@@ -144,7 +144,7 @@ const Shifts = (): React.JSX.Element => {
     });
   };
 
-  if (isLoading && shifts.length === 0 && isLoadingCompanies && isLoadingWorkers)
+  if ((isLoading && shifts.length === 0 && isLoadingCompanies && isLoadingWorkers) || isRefetching)
     return <Loading />;
 
   return (
@@ -189,7 +189,7 @@ const Shifts = (): React.JSX.Element => {
               {translating("shifts.add")}
             </button>
 
-            {filter.workerName &&
+            {filter.workerName && shifts.length > 0 &&
               <button
                 onClick={async () => await mutationDownload.mutateAsync(filter.workerName)}
                 className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1 flex-center-y gap-2"

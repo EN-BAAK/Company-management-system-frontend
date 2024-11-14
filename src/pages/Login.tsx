@@ -54,7 +54,7 @@ const Login = (): React.JSX.Element => {
               control='input'
               name='phone'
               label={translating("login.phone-number.label")}
-              type="number"
+              type="text"
               Icon={<FiPhone />}
             />
 

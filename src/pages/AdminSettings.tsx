@@ -161,7 +161,7 @@ const AdminSettings = (): React.JSX.Element => {
                   control='input'
                   name='newPhone'
                   label={translating("admin-settings.form.phone.fields.newPhone.label")}
-                  type='number'
+                  type='text'
                 />
 
                 <Button
