@@ -312,6 +312,7 @@ export const downloadShiftsReport = async (filters: FilterType) => {
   if (filters.searcher) queryParams.append("searcher", filters.searcher);
 
   try {
+    console.log("H");
     const response = await fetch(
       `${API_BASE_URL}/api/report?${queryParams.toString()}`,
       {
