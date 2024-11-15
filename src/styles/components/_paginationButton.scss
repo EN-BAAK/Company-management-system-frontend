@@ -1,7 +1,19 @@
-.pagination-button {
-  color: var(--c-main);
+.pagination-holder {
+  .page-number {
+    font-weight: 500;
+    color: var(--c-black-main);
 
-  &:disabled {
-    color: var(--c-gray-main);
+    &.active {
+      font-weight: bold;
+      color: var(--c-main);
+    }
+  }
+
+  .pagination-button {
+    color: var(--c-main);
+
+    &:disabled {
+      color: var(--c-gray-main);
+    }
   }
 }

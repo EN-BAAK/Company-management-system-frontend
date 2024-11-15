@@ -1,11 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Identifiable } from "./types";
 
-export const searchText = (search: string, text: string): boolean => {
-  const re = new RegExp("\\w*" + search + "\\w*", "ig");
-  return re.test(text);
-};
-
 export const formatText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
@@ -106,6 +101,13 @@ export const calculateTimeDifference = (
   return `${String(diffH).padStart(2, "0")}:${String(diffM).padStart(2, "0")}`;
 };
 
-export const formatMobileNumber = (number: string | number): string => {
-  return number.toString();
+export const debounce = (cb: (arg: string) => void, delay: number = 1000) => {
+  let timeout: number;
+
+  return (arg: string) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      cb(arg);
+    }, delay);
+  };
 };

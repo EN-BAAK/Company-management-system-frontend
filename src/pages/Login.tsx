@@ -11,7 +11,6 @@ import { login } from '../api-client'
 import { LoginForm } from '../misc/types'
 import { FiPhone } from "react-icons/fi";
 import { IoLockOpenOutline } from "react-icons/io5";
-import { formatMobileNumber } from '../misc/helpers'
 
 const Login = (): React.JSX.Element => {
   const { showToast } = useAppContext()
@@ -29,11 +28,7 @@ const Login = (): React.JSX.Element => {
   })
 
   const onSubmit = async (data: LoginForm, formik: FormikHelpers<LoginForm>) => {
-    const formattedData: LoginForm = {
-      phone: formatMobileNumber(data.phone),
-      password: data.password
-    }
-    await mutationLogin.mutateAsync(formattedData)
+    await mutationLogin.mutateAsync(data)
     formik.setSubmitting(false)
   }
 
@@ -55,6 +50,8 @@ const Login = (): React.JSX.Element => {
               name='phone'
               label={translating("login.phone-number.label")}
               type="text"
+              pattern='[0-9]*'
+              inputMode='numeric'
               Icon={<FiPhone />}
             />
 

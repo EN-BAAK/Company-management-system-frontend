@@ -8,6 +8,7 @@ export type ToastMessage = {
 export type variant = "info" | "danger" | "warning" | "secondary";
 export type inputField = "input" | "textarea" | "select" | "date" | "time";
 export type inputType = "text" | "number" | "password";
+export type inputMode = "text" | "numeric";
 export type role = "admin" | "worker";
 
 export type Warning = {
@@ -37,8 +38,9 @@ export type FormikControl = {
   labelClassName?: string;
   inputClassName?: string;
   Icon?: React.ReactNode;
-  pattern?: string;
   options?: { id: number | string; value: string; key: number | string }[];
+  inputMode?: inputMode;
+  pattern?: string;
 };
 
 export type LoginForm = {
@@ -89,7 +91,7 @@ export type Shift = {
   startHour: string | null;
   endHour: string | null;
   date: string;
-  location: string;
+  location?: string;
   workType?: string;
   worker?: {
     phone: string;
@@ -131,6 +133,7 @@ export type Filter = {
   date1: string;
   date2: string;
   limit: number;
+  searcher: string;
 };
 
 export interface Identifiable {

@@ -14,7 +14,7 @@ const App = (): React.JSX.Element => {
   const { isLoggedIn, user } = useAppContext()
 
   return (
-    <main id="App" className="d-flex flex-column">
+    <main id="App" className="d-flex flex-column justify-content-between">
       <Router>
         <Routes>
           {isLoggedIn ?

@@ -212,13 +212,13 @@ export const editPhone = async (data: editPhoneAdmin) => {
 
 export const fetchShifts = async (filters: FilterType, page: number) => {
   const queryParams = new URLSearchParams();
-
   if (filters.workerName) queryParams.append("workerName", filters.workerName);
   if (filters.companyName)
     queryParams.append("companyName", filters.companyName);
   if (filters.date1) queryParams.append("date1", filters.date1);
   if (filters.date2) queryParams.append("date2", filters.date2);
   queryParams.append("page", page.toString());
+  if (filters.searcher) queryParams.append("searcher", filters.searcher);
   if (filters.limit) queryParams.append("limit", filters.limit.toString());
 
   const url = `${API_BASE_URL}/api/shift?${queryParams.toString()}`;
@@ -328,7 +328,6 @@ export const downloadShiftsReport = async (workerName: string) => {
     console.error("Download failed:", error);
   }
 };
-
 
 // export const downloadShiftsReport = async (workerName: string) => {
 //   try {

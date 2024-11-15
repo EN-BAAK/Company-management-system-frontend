@@ -1,5 +1,5 @@
 #navbar {
-  height: 10vh;
+  padding: 0.5rem 0;
 
   &::after {
     content: "";
@@ -11,18 +11,11 @@
     bottom: 0;
   }
 
-  a {
-    color: var(--c-black-main);
-    svg {
-      font-size: 1.5rem;
-    }
-
-    &.pen {
-      @include same-scale(60px);
-      box-shadow: 0 5px 15px 0 #444444c5;
-
-      svg {
-        font-size: 1.2rem;
+  .nav-item {
+    a {
+      color: var(--c-black-main);
+      span {
+        font-size: 0.8rem;
       }
     }
   }

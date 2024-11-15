@@ -39,7 +39,7 @@ const PaginationButtons = ({ currentPage, totalPages, setPage }: Props): React.R
   const paginationPages = getPaginationPages(currentPage, totalPages);
 
   return (
-    <div className="w-100 flex-center-y justify-content-between">
+    <div className="w-100 flex-center-y justify-content-between pagination-holder">
       <PaginationControlButton
         disabled={currentPage === 1}
         onClick={goToPreviousPage}
@@ -56,7 +56,7 @@ const PaginationButtons = ({ currentPage, totalPages, setPage }: Props): React.R
             <button
               key={index}
               onClick={() => setPage(pageItem as number)}
-              className={`rounded-1 border-0  ${pageItem === currentPage ? 'text-primary fw-bold' : 'text-black fw-semibold'}`}
+              className={`page-number rounded-1 border-0 ${pageItem === currentPage && 'active'}`}
             >
               {pageItem}
             </button>

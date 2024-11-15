@@ -74,8 +74,11 @@ const ShiftCard = ({ shift, handleDelete, handleEdit, handleView }: Props): Reac
         </Col>
 
         <Col xs={5} className='flex-center-y gap-1'>
-          <FaLocationDot size={20} />
-          <p className='m-0'>{formatText(shift.location, maxTextLength)}</p>
+          {shift.location &&
+            <React.Fragment>
+              <FaLocationDot size={20} />
+              <p className='m-0'>{formatText(shift.location, maxTextLength)}</p>
+            </React.Fragment>}
         </Col>
 
         {(shift.startHour || shift.endHour) && (

@@ -4,7 +4,9 @@
     "delete": "מחיקה",
     "confirmDelete": "האם אתה בטוח שברצונך למחוק",
     "prev": "קודם",
-    "next": "הבא"
+    "next": "הבא",
+    "warning": "אזהרה",
+    "not-found": "הדף לא נמצא 404"
   },
   "login": {
     "phone-number": {

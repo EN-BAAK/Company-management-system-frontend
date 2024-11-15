@@ -11,10 +11,13 @@ import Logo from "../assets/images/logo.jpg"
 
 const SettingsNav = (): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
-  const { showToast } = useAppContext();
+  const { showToast, setLayout } = useAppContext();
   const queryClient = useQueryClient()
   const navigateTo = useNavigate();
   const mutation = useMutation(logout, {
+    onMutate: () => {
+      setLayout(true)
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries("validateToken")
       showToast({ message: translating("settings-nav.logout.success"), type: "SUCCESS" });
@@ -23,6 +26,9 @@ const SettingsNav = (): React.JSX.Element => {
     onError: () => {
       showToast({ message: translating("settings-nav.logout.error"), type: "ERROR" });
     },
+    onSettled: () => {
+      setLayout(false)
+    }
   })
 
   return (

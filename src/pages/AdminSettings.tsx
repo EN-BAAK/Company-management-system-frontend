@@ -12,7 +12,6 @@ import { editFullName, editPassword, editPhone } from '../api-client'
 import { editPasswordAdmin, editPhoneAdmin } from '../misc/types'
 import Scroll from '../layouts/Scroll'
 import { useTranslation } from 'react-i18next'
-import { formatMobileNumber } from '../misc/helpers'
 
 const AdminSettings = (): React.JSX.Element => {
   const { showToast } = useAppContext()
@@ -55,7 +54,7 @@ const AdminSettings = (): React.JSX.Element => {
   }
 
   const onEditPhoneSubmit = async (data: editPhoneAdmin, formik: FormikHelpers<editPhoneAdmin>) => {
-    await mutationPhone.mutateAsync({ password: data.password, newPhone: formatMobileNumber(data.newPhone) })
+    await mutationPhone.mutateAsync(data)
     formik.setSubmitting(false)
     formik.resetForm()
   }
@@ -162,7 +161,10 @@ const AdminSettings = (): React.JSX.Element => {
                   name='newPhone'
                   label={translating("admin-settings.form.phone.fields.newPhone.label")}
                   type='text'
+                  inputMode='numeric'
+                  pattern='[0-9]*'
                 />
+                <input type="text" inputMode='numeric' />
 
                 <Button
                   type='submit'

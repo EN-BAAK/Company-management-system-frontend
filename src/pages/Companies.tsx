@@ -9,7 +9,7 @@ import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { Company } from '../misc/types';
 import { useTranslation } from 'react-i18next';
-import { formatMobileNumber, handleDelete as handleDeleteFunc } from '../misc/helpers';
+import { handleDelete as handleDeleteFunc } from '../misc/helpers';
 import CompanyModal from '../components/Modals/Company';
 import PaginationButtons from '../components/PaginationButtons';
 
@@ -24,7 +24,7 @@ const Companies = (): React.JSX.Element => {
 
   const maxCompaniesPerPage = 25;
 
-  const { isLoading } = useQuery(
+  const { isLoading, isRefetching } = useQuery(
     ["companies", page],
     () => fetchCompanies(page, maxCompaniesPerPage),
     {
@@ -66,7 +66,7 @@ const Companies = (): React.JSX.Element => {
   };
 
 
-  if (isLoading && companies.length === 0) return <Loading />;
+  if ((isLoading && companies.length === 0) || isRefetching) return <Loading />;
 
   return (
     <Page id='companies'>
@@ -83,7 +83,7 @@ const Companies = (): React.JSX.Element => {
         {translating("companies.add")}
       </button>
 
-      {!isLoading && companies.length === 0
+      {companies.length === 0
         ? <h1 className='text-center text-secondary mt-2 w-100'>{translating("workers.empty")}</h1>
         : <Scroll>
           <div className='d-flex flex-column align-items-start justify-content-start gap-2 py-2'>
@@ -94,11 +94,11 @@ const Companies = (): React.JSX.Element => {
                   handleDelete={handleDelete}
                   id={company.id}
                   name={company.name}
-                  phone={formatMobileNumber(company.phone)}
+                  phone={company.phone}
                   handleSelectRecord={() => setSelectedCompany({
                     id: company.id,
                     name: company.name,
-                    phone: formatMobileNumber(company.phone),
+                    phone: company.phone,
                     notes: company.notes || ""
                   })}
                 />

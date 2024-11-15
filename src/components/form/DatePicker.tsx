@@ -5,7 +5,7 @@ import TextError from './TextError'
 import { FormikControl } from '../../misc/types';
 
 
-export interface Props extends HTMLAttributes<HTMLInputElement>, Omit<FormikControl, "control"> { }
+export interface Props extends HTMLAttributes<HTMLInputElement>, Omit<FormikControl, "control" | "inputMode"> { }
 
 const DatePicker = ({
   label,

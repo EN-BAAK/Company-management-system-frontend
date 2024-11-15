@@ -13,8 +13,8 @@ const ModalCard = ({ onClose, title, ...props }: HTMLAttributes<HTMLDivElement> 
         <Card.Header className='flex-center-y bg-white border-0 justify-content-between pt-4'>
           <button
             onClick={onClose}
-            className="close-icon bg-transparent rounded-circle flex-center text-primary fw-bold">
-              X
+            className="close-icon bg-transparent rounded-circle flex-center text-main-primary fw-bold">
+            X
           </button>
           <Card.Title className='text-center fw-semibold'>{title}</Card.Title>
         </Card.Header>

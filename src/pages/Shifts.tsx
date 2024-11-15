@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '../layouts/Page';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../context/AppProvider';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteShift, downloadShiftsReport, fetchCompaniesIdentity, fetchShifts, fetchWorkersIdentity, logout } from '../api-client';
+import { useMutation, useQuery } from 'react-query';
+import { deleteShift, downloadShiftsReport, fetchCompaniesIdentity, fetchShifts, fetchWorkersIdentity } from '../api-client';
 import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { CompanyIdentity, Filter as FilterType, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
 import ShiftCard from '../components/ShiftCard';
-import { formatMobileNumber, handleDelete as handleDeleteFunc, searchText } from '../misc/helpers';
-import { FormControl } from 'react-bootstrap';
-import { CiSearch } from "react-icons/ci";
-import { FiFilter } from "react-icons/fi";
+import { handleDelete as handleDeleteFunc } from '../misc/helpers';
 import ShiftController from '../components/Modals/shifts/Control';
 import Filter from '../components/Modals/shifts/Filter';
 import View from '../components/Modals/shifts/View';
 import { MdOutlineFileDownload } from "react-icons/md";
-import { MdOutlineLogout } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
 import PaginationButtons from '../components/PaginationButtons';
+import ShiftHeader from '../components/ShiftHeader';
 
 const Shifts = (): React.JSX.Element => {
+  console.log("Render page")
   const [page, setPage] = useState<number>(1)
-  const [search, setSearch] = useState<string>("");
   const [totalPages, setTotalPages] = useState<number>(1)
   const [shifts, setShifts] = useState<ShiftType[]>([]);
   const [selectedShift, setSelectedShift] = useState<ShiftControl | undefined>(undefined);
@@ -37,24 +33,14 @@ const Shifts = (): React.JSX.Element => {
     workerName: user.role === "worker" ? user.fullName : "",
     date1: "",
     date2: '',
+    searcher: "",
     limit: 12,
   });
 
   const { t: translating } = useTranslation("global");
-  const queryClient = useQueryClient()
-  const navigateTo = useNavigate()
-
-
-  const quickFilteredShifts = shifts.filter(shift =>
-    (shift.worker?.fullName && searchText(search, shift.worker.fullName)) ||
-    (shift.worker?.phone && searchText(search, formatMobileNumber(shift.worker.phone))) ||
-    (shift.workType && searchText(search, shift.workType)) ||
-    (searchText(search, shift.location)) ||
-    (searchText(search, shift.company.name))
-  );
 
   const { isLoading, isRefetching } = useQuery(
-    ["shifts", page, filter.workerName, filter.companyName, filter.date1, filter.date2],
+    ["shifts", page, filter.workerName, filter.companyName, filter.date1, filter.date2, filter.searcher],
     () => fetchShifts(filter, page),
     {
       onSuccess: (fetchedData) => {
@@ -92,17 +78,6 @@ const Shifts = (): React.JSX.Element => {
       refetchOnWindowFocus: false,
     }
   );
-
-  const mutationLogout = useMutation(logout, {
-    onSuccess: async () => {
-      await queryClient.invalidateQueries("validateToken")
-      showToast({ message: translating("shifts.logout.success"), type: "SUCCESS" });
-      navigateTo("/");
-    },
-    onError: () => {
-      showToast({ message: translating("shifts.logout.error"), type: "ERROR" });
-    },
-  })
 
   const mutationDelete = useMutation(deleteShift, {
     onMutate: () => {
@@ -144,31 +119,23 @@ const Shifts = (): React.JSX.Element => {
     });
   };
 
+  useEffect(() => {
+    console.log("Effect render")
+    return () => {
+    };
+  }, []);
+
+
   if ((isLoading && shifts.length === 0 && isLoadingCompanies && isLoadingWorkers) || isRefetching)
     return <Loading />;
 
   return (
     <Page id="shifts">
-      <div className="filters-holder mt-4 px-2 w-100 flex-center-y gap-3">
-        <div className="w-100 position-relative">
-          <CiSearch size={30} className="position-absolute search" />
-          <FormControl
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            type="text"
-            placeholder={translating("shifts.search")}
-            className="pe-5 py-2"
-          />
-        </div>
-
-        {user.role === "admin"
-          ? <div className='position-relative'>
-            <FiFilter onClick={() => setOpenedFilterModal(true)} size={30} />
-            {(filter.companyName || filter.date1 || filter.date2 || filter.workerName) && <div className='filter-flag bg-danger position-absolute rounded-circle' />}
-          </div>
-          : <MdOutlineLogout onClick={() => mutationLogout.mutate()} size={30} />
-        }
-      </div>
+      <ShiftHeader
+        filter={filter}
+        setFilter={setFilter}
+        setOpenedFilterModal={() => setOpenedFilterModal(true)}
+      />
 
       <div className="mt-2 flex-center-y justify-content-between w-100 px-2">
         {user.role === "admin"
@@ -208,7 +175,7 @@ const Shifts = (): React.JSX.Element => {
       ) : (
         <Scroll>
           <div className="d-flex flex-column align-items-start justify-content-start gap-2 py-2">
-            {quickFilteredShifts
+            {shifts
               .map(shift => (
                 <ShiftCard
                   key={`shift-${shift.id}`}
@@ -221,7 +188,7 @@ const Shifts = (): React.JSX.Element => {
                       endHour: shift.endHour || "",
                       startHour: shift.startHour || "",
                       id: shift.id,
-                      location: shift.location,
+                      location: shift.location || "",
                       workerId: shift.worker ? shift.worker.id : -1,
                       workType: shift.workType || "",
                       notes: shift.notes || ""
