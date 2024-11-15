@@ -43,6 +43,7 @@ const ShiftHeader = ({ filter, setFilter, setOpenedFilterModal }: Props): React.
       setFilter(prev => ({
         ...prev,
         searcher: value,
+        page: 1
       }));
     }, 1000), []
   );

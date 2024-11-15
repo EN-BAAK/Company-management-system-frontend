@@ -210,14 +210,14 @@ export const editPhone = async (data: editPhoneAdmin) => {
   return responseBody;
 };
 
-export const fetchShifts = async (filters: FilterType, page: number) => {
+export const fetchShifts = async (filters: FilterType) => {
   const queryParams = new URLSearchParams();
   if (filters.workerName) queryParams.append("workerName", filters.workerName);
   if (filters.companyName)
     queryParams.append("companyName", filters.companyName);
   if (filters.date1) queryParams.append("date1", filters.date1);
   if (filters.date2) queryParams.append("date2", filters.date2);
-  queryParams.append("page", page.toString());
+  queryParams.append("page", filters.page.toString());
   if (filters.searcher) queryParams.append("searcher", filters.searcher);
   if (filters.limit) queryParams.append("limit", filters.limit.toString());
 
@@ -302,10 +302,18 @@ export const editShift = async (data: { formData: FormData; id: number }) => {
   return responseBody;
 };
 
-export const downloadShiftsReport = async (workerName: string) => {
+export const downloadShiftsReport = async (filters: FilterType) => {
+  const queryParams = new URLSearchParams();
+  queryParams.append("workerName", encodeURIComponent(filters.workerName));
+  if (filters.companyName)
+    queryParams.append("companyName", filters.companyName);
+  if (filters.date1) queryParams.append("date1", filters.date1);
+  if (filters.date2) queryParams.append("date2", filters.date2);
+  if (filters.searcher) queryParams.append("searcher", filters.searcher);
+
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/report?workerName=${encodeURIComponent(workerName)}`,
+      `${API_BASE_URL}/api/report?${queryParams.toString()}`,
       {
         method: "GET",
         credentials: "include",
@@ -323,7 +331,41 @@ export const downloadShiftsReport = async (workerName: string) => {
     window.open(pdfUrl, "_blank");
 
     setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
+    console.log("Opened PDF in a new tab");
   } catch (error) {
     console.error("Download failed:", error);
   }
 };
+
+// export const downloadShiftsReport = async (workerName: string) => {
+//   try {
+//     const response = await fetch(
+//       `${API_BASE_URL}/api/report?workerName=${encodeURIComponent(workerName)}`,
+//       {
+//         method: "GET",
+//         credentials: "include",
+//       }
+//     );
+
+//     if (!response.ok) {
+//       const errorText = await response.text();
+//       throw new Error(errorText || "Failed to download the PDF report");
+//     }
+
+//     const blob = await response.blob();
+//     const pdfUrl = URL.createObjectURL(blob);
+
+//     // Create a temporary anchor element for the download
+//     const link = document.createElement("a");
+//     link.href = pdfUrl;
+//     link.download = `${workerName}_ShiftsReport.pdf`; // Set a filename for the download
+//     document.body.appendChild(link);
+//     link.click();
+
+//     // Clean up
+//     document.body.removeChild(link);
+//     setTimeout(() => URL.revokeObjectURL(pdfUrl), 100);
+//   } catch (error) {
+//     console.error("Download failed:", error);
+//   }
+// };

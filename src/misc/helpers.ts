@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Identifiable } from "./types";
+import { Filter as FilterType, Identifiable } from "./types";
 
 export const formatText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -16,6 +16,20 @@ export const handleDelete = <T extends Identifiable>(
   setItems(newItems);
   if (newItems.length <= 0 && currentPage > 1) {
     setCurrentPage(currentPage - 1);
+  }
+};
+
+export const handleDeleteShifts = <T extends Identifiable>(
+  id: number,
+  items: T[],
+  setItems: Dispatch<SetStateAction<T[]>>,
+  currentPage: number = 1,
+  setFilter: Dispatch<SetStateAction<FilterType>>
+) => {
+  const newItems = items.filter((item) => item.id !== id);
+  setItems(newItems);
+  if (newItems.length <= 0 && currentPage > 1) {
+    setFilter((prevFilter) => ({ ...prevFilter, page: prevFilter.page - 1 }));
   }
 };
 

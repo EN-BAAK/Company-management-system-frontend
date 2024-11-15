@@ -1,14 +1,16 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import PaginationControlButton from './PaginationControlButton';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 interface Props {
   currentPage: number;
-  totalPages: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  setPage: (page: number) => void
+  setPrevPage: () => void,
+  setNextPage: () => void,
+  totalPages: number
 }
 
-const PaginationButtons = ({ currentPage, totalPages, setPage }: Props): React.ReactNode => {
+const PaginationButtons = ({ currentPage, setPrevPage, setNextPage, setPage, totalPages }: Props): React.ReactNode => {
   const getPaginationPages = (currentPage: number, totalPages: number) => {
     const visiblePages = 3;
     const pages: (number | string)[] = [];
@@ -30,10 +32,10 @@ const PaginationButtons = ({ currentPage, totalPages, setPage }: Props): React.R
     return pages;
   };
   const goToNextPage = () => {
-    setPage(prevPage => prevPage + 1);
+    setNextPage()
   }
   const goToPreviousPage = () => {
-    setPage(prevPage => prevPage - 1);
+    setPrevPage()
   };
 
   const paginationPages = getPaginationPages(currentPage, totalPages);

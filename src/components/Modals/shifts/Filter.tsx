@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import ModalCard from '../ModalCard'
-import { CompanyIdentity, Filter as FilterType, Shift, WorkerIdentity } from '../../../misc/types'
+import { CompanyIdentity, Filter as FilterType, WorkerIdentity } from '../../../misc/types'
 import { Form, Formik } from 'formik'
 import FormikControl from '../../form/FormikControl'
 import { useTranslation } from 'react-i18next'
@@ -13,21 +13,27 @@ interface Props {
   setFilter: Dispatch<SetStateAction<FilterType>>
   companies: CompanyIdentity[],
   workers: WorkerIdentity[],
-  setShifts: Dispatch<SetStateAction<Shift[]>>
 }
 
-const Filter = ({ onClose, filter, setFilter, companies, workers, setShifts }: Props): React.JSX.Element => {
+const Filter = ({ onClose, filter, setFilter, companies, workers }: Props): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
 
   const onSubmit = (data: FilterType) => {
-    setShifts([]);
-    setFilter({ ...data, });
+    setFilter(prevFilter => ({
+      ...prevFilter,
+      workerName: data.workerName,
+      companyName: data.companyName,
+      date1: data.date1,
+      date2: data.date2,
+      page: 1
+    }));
     onClose();
   }
 
   const resetFilter = () => {
     setFilter(prevFilter => ({
       ...prevFilter,
+      page: 1,
       workerName: "",
       companyName: "",
       date1: "",

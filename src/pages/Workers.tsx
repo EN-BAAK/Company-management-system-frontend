@@ -111,7 +111,9 @@ const Workers = (): React.JSX.Element => {
 
           <PaginationButtons
             currentPage={page}
-            setPage={setPage}
+            setPage={(number) => setPage(number)}
+            setNextPage={() => setPage(prevPage => prevPage + 1)}
+            setPrevPage={() => setPage(prevPage => prevPage - 1)}
             totalPages={totalPages}
           />
         </Scroll >}

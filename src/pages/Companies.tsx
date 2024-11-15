@@ -107,8 +107,10 @@ const Companies = (): React.JSX.Element => {
 
           <PaginationButtons
             currentPage={page}
-            setPage={setPage}
             totalPages={totalPages}
+            setPage={(number) => setPage(number)}
+            setNextPage={() => setPage(prevPage => prevPage + 1)}
+            setPrevPage={() => setPage(prevPage => prevPage - 1)}
           />
         </Scroll>}
 

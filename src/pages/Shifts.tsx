@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Page from '../layouts/Page';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../context/AppProvider';
@@ -8,7 +8,7 @@ import Loading from '../layouts/Loading';
 import Scroll from '../layouts/Scroll';
 import { CompanyIdentity, Filter as FilterType, ShiftControl, Shift as ShiftType, WorkerIdentity } from '../misc/types';
 import ShiftCard from '../components/ShiftCard';
-import { handleDelete as handleDeleteFunc } from '../misc/helpers';
+import { handleDeleteShifts } from '../misc/helpers';
 import ShiftController from '../components/Modals/shifts/Control';
 import Filter from '../components/Modals/shifts/Filter';
 import View from '../components/Modals/shifts/View';
@@ -17,8 +17,6 @@ import PaginationButtons from '../components/PaginationButtons';
 import ShiftHeader from '../components/ShiftHeader';
 
 const Shifts = (): React.JSX.Element => {
-  console.log("Render page")
-  const [page, setPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
   const [shifts, setShifts] = useState<ShiftType[]>([]);
   const [selectedShift, setSelectedShift] = useState<ShiftControl | undefined>(undefined);
@@ -35,13 +33,14 @@ const Shifts = (): React.JSX.Element => {
     date2: '',
     searcher: "",
     limit: 12,
+    page: 1
   });
 
   const { t: translating } = useTranslation("global");
 
   const { isLoading, isRefetching } = useQuery(
-    ["shifts", page, filter.workerName, filter.companyName, filter.date1, filter.date2, filter.searcher],
-    () => fetchShifts(filter, page),
+    ["shifts", filter.page, filter.workerName, filter.companyName, filter.date1, filter.date2, filter.searcher],
+    () => fetchShifts(filter),
     {
       onSuccess: (fetchedData) => {
         setShifts(fetchedData.shifts)
@@ -85,7 +84,7 @@ const Shifts = (): React.JSX.Element => {
     },
     onSuccess: (data) => {
       showToast({ message: translating("shifts.delete.success"), type: "SUCCESS" });
-      handleDeleteFunc<ShiftType>(data.id, shifts, setShifts, page, setPage);
+      handleDeleteShifts<ShiftType>(data.id, shifts, setShifts, filter.page, setFilter);
     },
     onError: () => {
       showToast({ message: translating("shifts.delete.error"), type: "ERROR" });
@@ -119,13 +118,6 @@ const Shifts = (): React.JSX.Element => {
     });
   };
 
-  useEffect(() => {
-    console.log("Effect render")
-    return () => {
-    };
-  }, []);
-
-
   if ((isLoading && shifts.length === 0 && isLoadingCompanies && isLoadingWorkers) || isRefetching)
     return <Loading />;
 
@@ -139,7 +131,7 @@ const Shifts = (): React.JSX.Element => {
 
       <div className="mt-2 flex-center-y justify-content-between w-100 px-2">
         {user.role === "admin"
-          ? <React.Fragment>
+          && <React.Fragment>
             <button
               onClick={() => setSelectedShift({
                 companyId: -1,
@@ -158,7 +150,7 @@ const Shifts = (): React.JSX.Element => {
 
             {filter.workerName && shifts.length > 0 &&
               <button
-                onClick={async () => await mutationDownload.mutateAsync(filter.workerName)}
+                onClick={async () => await mutationDownload.mutateAsync(filter)}
                 className="border-0 fw-semibold bg-main text-main rounded-1 px-3 py-1 flex-center-y gap-2"
               >
                 <MdOutlineFileDownload
@@ -166,7 +158,6 @@ const Shifts = (): React.JSX.Element => {
                 {translating("shifts.download.button")}
               </button>}
           </React.Fragment>
-          : <></>
         }
       </div>
 
@@ -200,8 +191,10 @@ const Shifts = (): React.JSX.Element => {
           </div>
 
           <PaginationButtons
-            currentPage={page}
-            setPage={setPage}
+            currentPage={filter.page}
+            setPage={(number) => setFilter(prevFilter => ({ ...prevFilter, page: number }))}
+            setNextPage={() => setFilter(prevFilter => ({ ...prevFilter, page: prevFilter.page + 1 }))}
+            setPrevPage={() => setFilter(prevFilter => ({ ...prevFilter, page: prevFilter.page - 1 }))}
             totalPages={totalPages}
           />
         </Scroll>
@@ -222,7 +215,6 @@ const Shifts = (): React.JSX.Element => {
           filter={filter}
           setFilter={setFilter}
           workers={workers}
-          setShifts={setShifts}
           companies={companies}
           onClose={() => setOpenedFilterModal(false)}
         />

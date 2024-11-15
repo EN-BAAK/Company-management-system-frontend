@@ -134,6 +134,7 @@ export type Filter = {
   date2: string;
   limit: number;
   searcher: string;
+  page: number;
 };
 
 export interface Identifiable {

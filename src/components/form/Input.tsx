@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap'
 import TextError from './TextError'
 import { FormikControl } from '../../misc/types';
 
-export interface Props extends HTMLAttributes<HTMLInputElement>, Omit<FormikControl, "control" | "inputMode"> { }
+export interface Props extends Omit<HTMLAttributes<HTMLInputElement>, "inputMode">, Omit<FormikControl, "control"> { }
 
 const Input = ({ label, name, inputClassName, labelClassName, Icon, formGroupClassName, ...reset }: Props): React.ReactNode => {
 
