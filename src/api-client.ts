@@ -322,42 +322,8 @@ export const downloadShiftsReport = async (workerName: string) => {
 
     window.open(pdfUrl, "_blank");
 
-    // setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
-    // console.log("Opened PDF in a new tab");
+    setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
   } catch (error) {
     console.error("Download failed:", error);
   }
 };
-
-// export const downloadShiftsReport = async (workerName: string) => {
-//   try {
-//     const response = await fetch(
-//       `${API_BASE_URL}/api/report?workerName=${encodeURIComponent(workerName)}`,
-//       {
-//         method: "GET",
-//         credentials: "include",
-//       }
-//     );
-
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//       throw new Error(errorText || "Failed to download the PDF report");
-//     }
-
-//     const blob = await response.blob();
-//     const pdfUrl = URL.createObjectURL(blob);
-
-//     // Create a temporary anchor element for the download
-//     const link = document.createElement("a");
-//     link.href = pdfUrl;
-//     link.download = `${workerName}_ShiftsReport.pdf`; // Set a filename for the download
-//     document.body.appendChild(link);
-//     link.click();
-
-//     // Clean up
-//     document.body.removeChild(link);
-//     setTimeout(() => URL.revokeObjectURL(pdfUrl), 100);
-//   } catch (error) {
-//     console.error("Download failed:", error);
-//   }
-// };
