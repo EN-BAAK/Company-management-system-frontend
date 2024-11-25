@@ -18,6 +18,16 @@ export default defineConfig({
         theme_color: "#ffffff", // The background color for the splash screen
         icons: [
           {
+            src: "./src/assets/icons/icon-16x16.png",
+            sizes: "16x16",
+            type: "image/png",
+          },
+          {
+            src: "./src/assets/icons/icon-32x32.png",
+            sizes: "32x32",
+            type: "image/png",
+          },
+          {
             src: "./src/assets/icons/icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
@@ -27,14 +37,9 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
           },
-          {
-            src: "./src/assets/icons/icon-1024x1024.png",
-            sizes: "1024x1024",
-            type: "image/png",
-          },
         ],
         start_url: "/",
-        display: "standalone", // Ensures it runs like a native app, not in a browser tab
+        display: "standalone",
       },
     }),
   ],
