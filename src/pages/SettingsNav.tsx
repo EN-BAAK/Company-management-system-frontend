@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { logout } from '../api-client';
 import { useAppContext } from '../context/AppProvider';
 import { useTranslation } from 'react-i18next';
-import Logo from "../assets/images/logo.jpg"
+import Logo from "../assets/images/logo.png"
 
 const SettingsNav = (): React.JSX.Element => {
   const { t: translating } = useTranslation("global")
@@ -37,16 +37,16 @@ const SettingsNav = (): React.JSX.Element => {
 
       <nav className='d-flex flex-column px-2 gap-5 fs-4'>
         {SettingsNavArray.map(nav => (
-          <NavLink className="text-black" key={`settings-nav-${nav.id}`} to={nav.path}>
-            <nav.Icon className='ms-2' />
+          <NavLink className="text-black flex-center-y gap-2" key={`settings-nav-${nav.id}`} to={nav.path}>
+            <nav.Icon />
             {nav.name}
           </NavLink>
         ))}
 
         <button
           onClick={() => mutation.mutate()}
-          className='border-0 bg-transparent d-block text-end p-0'>
-          <MdOutlineLogout className='ms-2' />
+          className='border-0 bg-transparent d-block d-flex align-items-center gap-2 p-0 '>
+          <MdOutlineLogout />
           {translating("settings-nav.logout.name")}
         </button>
       </nav>

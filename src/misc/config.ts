@@ -1,8 +1,4 @@
-import {
-  editPasswordAdmin,
-  editPhoneAdmin,
-  LoginForm,
-} from "./types";
+import { editPasswordAdmin, editPhoneAdmin, LoginForm } from "./types";
 import * as Yup from "yup";
 import { PiUsersThreeBold } from "react-icons/pi";
 import { FaRegBuilding } from "react-icons/fa";
@@ -26,19 +22,19 @@ export const SettingsNavArray = [
   {
     id: 1,
     path: "workers",
-    name: "עובדים",
+    name: "Workers",
     Icon: PiUsersThreeBold,
   },
   {
     id: 2,
     path: "companies",
-    name: "חברות",
+    name: "Companies",
     Icon: FaRegBuilding,
   },
   {
     id: 3,
     path: "admin",
-    name: "עדכון סיסמת מנהל",
+    name: "Admin Password Update",
     Icon: RiAdminLine,
   },
 ];

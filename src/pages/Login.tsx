@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from "../assets/images/logo.jpg"
+import Logo from "../assets/images/logo.png"
 import { Form, Formik, FormikHelpers } from 'formik'
 import { initialLoginValues, loginValidationSchema } from '../misc/config'
 import FormikControl from '../components/form/FormikControl'

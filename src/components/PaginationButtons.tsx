@@ -46,7 +46,7 @@ const PaginationButtons = ({ currentPage, setPrevPage, setNextPage, setPage, tot
         disabled={currentPage === 1}
         onClick={goToPreviousPage}
       >
-        <FaAngleRight />
+        <FaAngleLeft />
       </PaginationControlButton>
 
 
@@ -70,7 +70,7 @@ const PaginationButtons = ({ currentPage, setPrevPage, setNextPage, setPage, tot
         disabled={currentPage >= totalPages}
         onClick={goToNextPage}
       >
-        <FaAngleLeft />
+        <FaAngleRight />
       </PaginationControlButton>
     </div>
   );

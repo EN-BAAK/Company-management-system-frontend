@@ -1,118 +1,118 @@
 {
   "global": {
-    "cancel": "ביטול",
-    "delete": "מחיקה",
-    "confirmDelete": "האם אתה בטוח שברצונך למחוק",
-    "prev": "קודם",
-    "next": "הבא",
-    "warning": "אזהרה",
-    "not-found": "הדף לא נמצא 404"
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete?",
+    "prev": "Previous",
+    "next": "Next",
+    "warning": "Warning",
+    "not-found": "Page not found 404"
   },
   "login": {
     "phone-number": {
-      "label": "מספר טלפון",
+      "label": "Phone Number",
       "error": {
-        "required": "מספר הטלפון הנייד נדרש"
+        "required": "Phone number is required"
       }
     },
     "password": {
-      "label": "סיסמה",
-      "error": "הסיסמה נדרשת"
+      "label": "Password",
+      "error": "Password is required"
     },
-    "success": "נכנסת בהצלחה",
-    "error": "נכנסת נכשלה",
-    "submit": "התחברות"
+    "success": "Logged in successfully",
+    "error": "Login failed",
+    "submit": "Login"
   },
   "bottom-nav": {
-    "settings": "הגדרות",
-    "shifts": "משמרות"
+    "settings": "Settings",
+    "shifts": "Shifts"
   },
   "companies": {
-    "title": "חברות",
-    "add": "הוסף חברה חדשה",
-    "empty": "עדיין אין חברות",
+    "title": "Companies",
+    "add": "Add New Company",
+    "empty": "No companies yet",
     "delete": {
-      "success": "חברה נמחקה בהצלחה",
-      "error": "נכשלה במחיקת החברה"
+      "success": "Company deleted successfully",
+      "error": "Failed to delete company"
     },
     "modal": {
       "title": {
-        "create": "צור חברה",
-        "edit": "ערוך חברה"
+        "create": "Create Company",
+        "edit": "Edit Company"
       },
-      "confirm": "אישור",
+      "confirm": "Confirm",
       "create": {
-        "success": "חברה נוצרה בהצלחה",
-        "error": "יצירת חברה נכשלה"
+        "success": "Company created successfully",
+        "error": "Failed to create company"
       },
       "edit": {
-        "success": "חברה נערכה בהצלחה",
-        "error": "עריכת חברה נכשלה"
+        "success": "Company edited successfully",
+        "error": "Failed to edit company"
       },
       "form": {
         "name": {
-          "label": "שם",
+          "label": "Name",
           "error": {
-            "required": "יש למלא את השם"
+            "required": "Name is required"
           }
         },
         "phone": {
-          "label": "מספר נייד",
+          "label": "Phone Number",
           "error": {
-            "required": "יש למלא את מספר הטלפון"
+            "required": "Phone number is required"
           }
         },
         "notes": {
-          "label": "הערות"
+          "label": "Notes"
         }
       }
     }
   },
   "workers": {
-    "title": "עובדים",
-    "add": "הוסף עובד חדש",
-    "empty": " עדיין אין עובדים",
+    "title": "Workers",
+    "add": "Add New Worker",
+    "empty": "No workers yet",
     "delete": {
-      "success": "עובד נמחק בהצלחה",
-      "error": "נכשלה במחיקת העובד"
+      "success": "Worker deleted successfully",
+      "error": "Failed to delete worker"
     },
     "modal": {
       "title": {
-        "create": "צור עובד",
-        "edit": "ערוך עובד"
+        "create": "Create Worker",
+        "edit": "Edit Worker"
       },
-      "confirm": "אישור",
+      "confirm": "Confirm",
       "create": {
-        "success": "עובד נוצר בהצלחה",
-        "error": "יצירת עובד נכשלה"
+        "success": "Worker created successfully",
+        "error": "Failed to create worker"
       },
       "edit": {
-        "success": "עובד נערך בהצלחה",
-        "error": "עריכת עובד נכשלה"
+        "success": "Worker edited successfully",
+        "error": "Failed to edit worker"
       },
       "form": {
         "fullName": {
-          "label": "שם מלא",
+          "label": "Full Name",
           "error": {
-            "required": "יש למלא את השם המלא"
+            "required": "Full name is required"
           }
         },
         "phone": {
-          "label": "מספר נייד",
+          "label": "Phone Number",
           "error": {
-            "required": "יש למלא את מספר הטלפון"
+            "required": "Phone number is required"
           }
         },
         "notes": {
-          "label": "הערות"
+          "label": "Notes"
         },
         "personal_id": {
-          "label": "תעודת זהות"
+          "label": "ID Card"
         },
         "password": {
-          "label": "סיסמה",
+          "label": "Password",
           "error": {
-            "required": "יש למלא את הסיסמה"
+            "required": "Password is required"
           }
         }
       }
@@ -120,130 +120,130 @@
   },
   "settings-nav": {
     "logout": {
-      "name": "התנתקות",
-      "error": "התנתקות נכשלה",
-      "success": "התנתקת בהצלחה"
+      "name": "Logout",
+      "error": "Logout failed",
+      "success": "Logged out successfully"
     }
   },
   "admin-settings": {
-    "title": "הגדרות מנהל",
-    "edit-button": "ערוך",
+    "title": "Admin Settings",
+    "edit-button": "Edit",
     "form": {
       "fullName": {
-        "title": "עריכת שם מלא",
+        "title": "Edit Full Name",
         "fields": {
           "fullName": {
-            "label": "שם מלא חדש",
+            "label": "New Full Name",
             "error": {
-              "required": "שם מלא נדרש"
+              "required": "Full name is required"
             }
           }
         },
         "edit": {
-          "success": "השם המלא נערך בהצלחה",
-          "error": "עריכת השם המלא נכשלה"
+          "success": "Full name edited successfully",
+          "error": "Failed to edit full name"
         }
       },
       "password": {
-        "title": "עריכת סיסמה",
+        "title": "Edit Password",
         "fields": {
           "password": {
-            "label": "סיסמה",
+            "label": "Password",
             "error": {
-              "required": "סיסמה נדרשת"
+              "required": "Password is required"
             }
           },
           "newPassword": {
-            "label": "סיסמה חדשה",
+            "label": "New Password",
             "error": {
-              "required": "סיסמה חדשה נדרשת"
+              "required": "New password is required"
             }
           }
         },
         "edit": {
-          "success": "הסיסמה נערכה בהצלחה",
-          "error": "עריכת הסיסמה נכשלה"
+          "success": "Password edited successfully",
+          "error": "Failed to edit password"
         }
       },
       "phone": {
-        "title": "עריכת מספר טלפון",
+        "title": "Edit Phone Number",
         "fields": {
           "password": {
-            "label": "סיסמה",
+            "label": "Password",
             "error": {
-              "required": "סיסמה נדרשת"
+              "required": "Password is required"
             }
           },
           "newPhone": {
-            "label": "מספר טלפון חדש",
+            "label": "New Phone Number",
             "error": {
-              "required": "מספר טלפון חדש נדרש"
+              "required": "New phone number is required"
             }
           }
         },
         "edit": {
-          "success": "מספר הטלפון נערך בהצלחה",
-          "error": "עריכת מספר הטלפון נכשלה"
+          "success": "Phone number edited successfully",
+          "error": "Failed to edit phone number"
         }
       }
     }
   },
   "shifts": {
     "logout": {
-      "name": "התנתקות",
-      "error": "התנתקות נכשלה",
-      "success": "התנתקת בהצלחה"
+      "name": "Logout",
+      "error": "Logout failed",
+      "success": "Logged out successfully"
     },
-    "add": "הוסף משמרת חדשה",
-    "search": "חיפוש מהיר",
+    "add": "Add New Shift",
+    "search": "Quick Search",
     "download": {
-      "button": "הורדה",
-      "success": "ההורדה הצליחה",
-      "error": "ההורדה נכשלה"
+      "button": "Download",
+      "success": "Download successful",
+      "error": "Download failed"
     },
     "delete": {
-      "confirm": "האם אתה בטוח שברצונך למחוק:",
-      "success": "המשמרת נמחקה בהצלחה",
-      "error": "שגיאה במחיקת המשמרת"
+      "confirm": "Are you sure you want to delete:",
+      "success": "Shift deleted successfully",
+      "error": "Error deleting shift"
     },
     "form": {
       "title": {
-        "create": "צור משמרת",
-        "edit": "ערוך משמרת"
+        "create": "Create Shift",
+        "edit": "Edit Shift"
       },
       "fields": {
-        "workerName": "שם העובד",
-        "companyName": "שם החברה",
-        "date": "תאריך",
-        "start": "שעת התחלה",
-        "end": "שעת סיום",
-        "location": "מיקום",
-        "workType": "סוג עבודה",
-        "notes": "הערות"
+        "workerName": "Worker's Name",
+        "companyName": "Company Name",
+        "date": "Date",
+        "start": "Start Time",
+        "end": "End Time",
+        "location": "Location",
+        "workType": "Work Type",
+        "notes": "Notes"
       },
       "create": {
-        "success": "המשמרת נוצרה בהצלחה",
-        "error": "יצירת המשמרת נכשלה"
+        "success": "Shift created successfully",
+        "error": "Failed to create shift"
       },
       "edit": {
-        "success": "המשמרת נערכה בהצלחה",
-        "error": "עריכת המשמרת נכשלה"
+        "success": "Shift edited successfully",
+        "error": "Failed to edit shift"
       },
-      "confirm": "אישור"
+      "confirm": "Confirm"
     },
     "filter": {
-      "title": "סינון",
-      "query": "סוג שאילתה",
-      "workerName": "שם העובד",
-      "companyName": "שם החברה",
-      "date": "מתאריך מסוים",
-      "from": "מ",
-      "to": "עד",
-      "reset": "איפוס",
-      "confirm": "אישור"
+      "title": "Filter",
+      "query": "Query Type",
+      "workerName": "Worker's Name",
+      "companyName": "Company Name",
+      "date": "From Specific Date",
+      "from": "From",
+      "to": "To",
+      "reset": "Reset",
+      "confirm": "Confirm"
     },
     "view": {
-      "title": "פרטי המשמרת"
+      "title": "Shift Details"
     }
   }
 }
